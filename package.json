@@ -1,0 +1,41 @@
+{
+  "name": "nicovideo-api-nodejs-client",
+  "version": "0.0.1",
+  "description": "The Node.js library to access to nicovideo.jp.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register -R spec tests/**/*Spec.ts"
+  },
+  "author": "SSW-SCIENTIFIC",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.1",
+    "@types/fs-promise": "^1.0.3",
+    "@types/mocha": "^2.2.41",
+    "@types/power-assert": "^1.4.29",
+    "@types/query-string": "^4.3.1",
+    "@types/request": "0.0.42",
+    "@types/request-promise": "^4.1.33",
+    "@types/xml-js": "^1.0.0",
+    "awesome-typescript-loader": "^3.1.2",
+    "fs-promise": "^2.0.2",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2",
+    "ts-node": "^3.0.2",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.0",
+    "webpack": "^2.4.1",
+    "webpack-merge": "^4.1.0"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "query-string": "^4.3.4",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "tough-cookie": "^2.3.2",
+    "xml-js": "^1.0.2"
+  }
+}
