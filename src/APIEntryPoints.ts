@@ -7,6 +7,12 @@ import { DmcSession } from "./Video/DmcSession";
 const ORIGIN = "http://www.nicovideo.jp";
 
 export namespace Session {
+    /**
+     * Returns request-promise options to login to nicovideo.jp.
+     * @param {string} email An E-mail used to login.
+     * @param {string} password A password used to login.
+     * @returns {RequestPromise.Options}
+     */
     export function login(email: string, password: string): RequestPromise.Options {
         return {
             method: "POST",
@@ -18,42 +24,82 @@ export namespace Session {
             simple: false,
         };
     }
+
+    /**
+     * Returns request-promise options to logout from nicovideo.jp.
+     * @returns {RequestPromise.Options}
+     * @todo check is collect.
+     */
+    export function logout(): RequestPromise.Options {
+        return {
+            method: "GET",
+            uri: APIUrl.LOGOUT,
+        };
+    }
 }
 
 export namespace Video {
-    export function getthumbinfo(movieId: string): RequestPromise.Options {
+    /**
+     * Returns request-promise options to access to getthumbinfo API.
+     * @param {string} videoId
+     * @returns {RequestPromise.Options}
+     */
+    export function getthumbinfo(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
-            uri: APIUrl.GET_THUMB_INFO + movieId,
+            uri: APIUrl.GET_THUMB_INFO + videoId,
         };
     }
 
-    export function watch(movieId: string): RequestPromise.Options {
+    /**
+     * Returns request-promise options to access to watch API.
+     * @param {string} videoId
+     * @returns {RequestPromise.Options}
+     */
+    export function watch(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
-            uri: APIUrl.WATCH + movieId,
+            uri: APIUrl.WATCH + videoId,
         };
     }
 
-    export function getflv(movieId: string): RequestPromise.Options {
+    /**
+     * Returns request-promise options to access to getflv API.
+     * @param {string} videoId
+     * @returns {RequestPromise.Options}
+     */
+    export function getflv(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
-            uri: APIUrl.GET_FLV + movieId + (movieId.match(/^nm/) ? "?as3=1" : ""),
+            uri: APIUrl.GET_FLV + videoId + (videoId.match(/^nm/) ? "?as3=1" : ""),
         };
     }
 
-    export function downloadflv(movieId: string, flvUri: string): Request.Options {
+    /**
+     * Returns request options to download video from smile server.
+     * @param {string} videoId
+     * @param {string} videoUri
+     * @returns {Request.Options}
+     */
+    export function downloadsmile(videoId: string, videoUri: string): Request.Options {
         return {
             method: "GET",
-            uri: flvUri,
+            uri: videoUri,
             encoding: null,
             headers: {
-                "Referer": APIUrl.WATCH + movieId,
-            }
+                "Referer": APIUrl.WATCH + videoId,
+            },
         };
     }
 
-    export function dmcsession(movieId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
+    /**
+     * Returns request-promise options to start session for dmc server.
+     * @param {string} videoId
+     * @param {string} apiUrl
+     * @param {DmcSession} dmcSession
+     * @returns {RequestPromise.Options}
+     */
+    export function dmcsession(videoId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
         return {
             uri: apiUrl + "/?_format=json",
             method: "POST",
@@ -61,13 +107,20 @@ export namespace Video {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Referer": APIUrl.WATCH + movieId,
+                "Referer": APIUrl.WATCH + videoId,
                 "Origin": APIUrl.ORIGIN,
             },
         };
     }
 
-    export function dmcheartbeat(movieId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
+    /**
+     * Returns request-promise options to keep session for dmc server.
+     * @param {string} videoId
+     * @param {string} apiUrl
+     * @param {DmcSession} dmcSession
+     * @returns {RequestPromise.Options}
+     */
+    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
         return {
             uri: apiUrl + "/" + dmcSession.session.id + "?_format=json&_method=PUT",
             method: "POST",
@@ -75,21 +128,27 @@ export namespace Video {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Referer": APIUrl.WATCH + movieId,
+                "Referer": APIUrl.WATCH + videoId,
                 "Origin": APIUrl.ORIGIN,
             },
         };
     }
 
-    export function downloaddmc(movieId: string, dmcUrl: string): Request.Options {
+    /**
+     * Returns request options to download video from dmc server.
+     * @param {string} videoId
+     * @param {string} videoUrl
+     * @returns {Request.Options}
+     */
+    export function downloaddmc(videoId: string, videoUrl: string): Request.Options {
         return {
             method: "GET",
-            uri: dmcUrl,
+            uri: videoUrl,
             encoding: null,
             headers: {
-                "Origin": "http://www.nicovideo.jp",
+                "Origin": APIUrl.ORIGIN,
                 "Range": "bytes=0-",
-                "Referer": "http://www.nicovideo.jp/watch/" + movieId,
+                "Referer": APIUrl.WATCH + videoId,
             },
         };
     }

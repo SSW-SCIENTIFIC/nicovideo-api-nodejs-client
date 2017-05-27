@@ -9,6 +9,7 @@ import { WatchAPIData } from "../Video/WatchAPIData";
 
 import { Session } from "../Session/Session";
 import { Video as VideoAPI } from "../APIEntryPoints";
+import * as APIUrl from "../APIUrls";
 
 export class Video {
     private request: typeof Request;
@@ -27,7 +28,8 @@ export class Video {
         return xml2js(await this.getThumbInfo_Raw(movieId), { compact: true });
     }
 
-    public async watchAPI_Raw(movieId: string): Promise<string> {
+    public async watchAPI_Raw(movieId: string, isHTML5: boolean = false): Promise<string> {
+        this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1": "0")), APIUrl.WATCH + movieId);
         return this.requestPromise(VideoAPI.watch(movieId));
     }
 
@@ -43,13 +45,13 @@ export class Video {
     public async downloadFLV(movieId: string): Promise<Buffer> {
         let getFLVResult = await this.getFLV(movieId);
         await this.watchAPI_Raw(movieId);
-        return this.requestPromise(VideoAPI.downloadflv(movieId, getFLVResult.url));
+        return this.requestPromise(VideoAPI.downloadsmile(movieId, getFLVResult.url));
     }
 
     public async streamingFLV(movieId: string): Promise<Request.Request> {
         let getFLVResult = await this.getFLV(movieId);
         await this.watchAPI_Raw(movieId);
-        return this.request(VideoAPI.downloadflv(movieId, getFLVResult.url));
+        return this.request(VideoAPI.downloadsmile(movieId, getFLVResult.url));
     }
 
     public async watchAPIData(movieId: string) {

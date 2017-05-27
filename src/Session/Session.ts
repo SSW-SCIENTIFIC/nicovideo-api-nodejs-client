@@ -1,5 +1,10 @@
 import * as Request from "request-promise";
+import * as RequestPromise from "request-promise";
 import ToughCookie from "tough-cookie";
+
+import { Session as SessionAPI } from "../APIEntryPoints";
+import * as APIUrl from "../APIUrls";
+import SessionException from "./SessionException";
 
 type Cookie = typeof ToughCookie.Cookie;
 type ToughCookieJar = typeof ToughCookie.CookieJar;
@@ -10,16 +15,19 @@ type ToughCookieJar = typeof ToughCookie.CookieJar;
 export class Session {
     private active: boolean;
     private email: string;
+    private request: typeof RequestPromise;
 
     public get jar() {
         return this.cookieJar;
     }
 
     /**
-     * constructor
+     * @constructor
+     * @param {ToughCookieJar} cookieJar
      */
     public constructor(private cookieJar: ToughCookieJar = Request.jar()) {
         this.active = false;
+        this.request = RequestPromise.defaults({ jar: this.jar });
     }
 
     /**
@@ -28,22 +36,13 @@ export class Session {
      * @param {string} password
      * @returns {Promise<void>}
      */
-    public async login(email: string, password: string) {
-        return Request({
-            method: "POST",
-            uri: "https://secure.nicovideo.jp/secure/login",
-            form: {
-                mail_tel: email,
-                password: password,
-            },
-            jar: this.cookieJar,
-            simple: false,
-        }).then((response) => {
-            let count = this.cookieJar.getCookies("https://secure.nicovideo.jp")
+    public async login(email: string, password: string): Promise<void> {
+        return this.request(SessionAPI.login(email, password)).then(() => {
+            let count = this.cookieJar.getCookies(APIUrl.LOGIN)
                 .filter((cookie: Cookie, index: number) => cookie.key === "user_session").length;
 
             if (count === 0) {
-                return Promise.reject("Failed to Login.");
+                throw new SessionException("Failed to Login.");
             }
 
             this.email = email;
@@ -53,10 +52,14 @@ export class Session {
         });
     }
 
+    public async logout(): Promise<void> {
+        return this.request(SessionAPI.logout());
+    }
+
     /**
      * @returns {boolean} This getter returns if this session is active.
      */
-    public get isActive() {
+    public get isActive(): boolean {
         return this.active;
     }
 
@@ -64,7 +67,7 @@ export class Session {
      *
      * @returns {string}
      */
-    public toJSON() {
+    public toJSON(): string {
         if (!this.isActive) {
             throw new Error("Session is not logged in.");
         }
@@ -76,7 +79,7 @@ export class Session {
      *
      * @param {string} serialized
      */
-    public fromJSON(serialized: string) {
+    public fromJSON(serialized: string): void {
         this.cookieJar = JSON.parse(serialized);
         this.active = true;
     }

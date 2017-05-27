@@ -1,143 +1,139 @@
+import { PlaylistItem } from "./PlaylistItem";
+import { Tag } from "./Tag";
+import { ThreadInformation } from "./ThreadInformation";
+import { VideoInformation } from "./VideoInformation";
+
 export interface WatchAPIData {
-    flashvars: {
-        watchAuthKey: string,
-        flvInfo: string,
-        isDmc: boolean,
-        dmcInfo: string,
-        isBackComment: boolean,
-        thumbTitle: string,
-        thumbDescription: string,
-        videoTitle: string,
-        player_version_xml: number,
-        player_info_xml: number,
-        appli_promotion_info_xml: number,
-        user_blank_icon_url: string,
-        translation_version_json: number,
-        userPrefecture: number,
-        csrfToken: number,
-        isPeakTime: boolean,
-        comment_visibility: number,
-        v: string,
-        videoId: string,
-        deleted: boolean,
-        mylist_counter: number,
-        mylistcomment_counter: number,
-        movie_type: string,
-        thumbImage: string,
-        videoUserId: number,
-        userSex: number,
-        userAge: number,
-        us: number,
-        ad: string,
-        iee: number,
-        communityPostURL: string,
-        isNeedPayment: boolean,
-        dicArticleURL: string,
-        blogEmbedURL: string,
-        uadAdvertiseURL: string,
-        category: string,
-        categoryGroupKey: string,
-        categoryGroup: string,
-        isWide: boolean,
-        wv_id: string,
-        wv_title: string,
-        wv_code: string,
-        wv_time: number,
-        leaf_switch: number,
-        appliInstalled: boolean,
-        use_getrelateditem: boolean,
-        seek_token: string,
-        tagHirobaId: number,
-        language: string,
-        area: string,
-        commentLanguage: string,
-        isAuthenticationRequired: boolean,
-        watchTrackId: string,
-        watchPageServerTime: number,
-        morningPremium: {
-            status: string,
-            timing: string,
-            from_top: false,
-        },
+    video: VideoInformation;
+    player?: {
+        playerInfoXMLUpdateTIme: number,
+        isContinuous: boolean,
     };
-    videoDetail: {
-        v: string,
-        id: string,
-        title: string,
-        description: string,
-        is_translated: boolean,
-        title_original: string,
-        description_original: string,
-        thumbnail: string,
-        postedAt: string,
-        length: number,
-        viewCount: number,
-        mylistCount: number,
-        commentCount: number,
-        mainCommunityId: number,
-        communityId: number,
-        channelId: number,
-        isDeleted: boolean,
-        isMymemory: boolean,
-        isMonetized: boolean,
-        isR18: boolean,
-        is_adult: boolean,
-        language: string,
-        area: string,
-        can_translate: boolean,
-        video_translation_info: boolean,
-        category: string,
-        thread_id: string,
-        main_genre: string,
-        has_owner_thread?: boolean,
-        is_video_owner?: boolean,
-        is_uneditable_tag: boolean,
-        commons_tree_exists: boolean,
-        yesterday_rank?: number,
-        highest_rank: number,
-        for_bgm: boolean,
-        is_nicowari?: boolean,
-        is_public: boolean,
-        is_official: boolean,
-        no_ichiba: boolean,
-        dicArticleURL: string,
-        tagList: Array<{
-            id: number,
-            tag: string,
-            cat?: boolean,
-            dic?: boolean,
-            lck?: boolean,
-        }>,
-        is_thread_owner: boolean,
-        width: number,
-        height: number,
+    thread: ThreadInformation;
+    tags: Array<Tag>;
+    playlist: {
+        items: Array<PlaylistItem>,
+        type: string, // 'recommend'
+        ref: string, // 'other'
+        option: Array<any>, // []
     };
-    uploaderInfo: {
+    owner?: {
+        id: string, // '2047738'
+        nickname: string,
+        stampExp: string, // '271'
+        iconURL: string,
+        nicoliveInfo?: any,
+        channelInfo?: any,
+        isUserVideoPublic: boolean,
+        isUserMyVideoPublic: boolean,
+        isUserOpenListPublic: boolean,
+    };
+    viewer: {
         id: number,
         nickname: string,
-        stamp_exp: number,
-        icon_url: string,
-        is_uservideo_public: boolean,
-        is_user_myvideo_public: boolean,
-        is_user_openlist_public: boolean,
-    };
-    viewerInfo: {
-        id: number,
-        nickname: string,
+        prefecture: number, // 20
+        sex: number, // 0
+        age: number, // 35
         isPremium: boolean,
         isPrivileged: boolean,
-    },
-    tagRelatedMarquee?: any,
-    tagRelatedBanner?: any,
-    topicalLiveRanking: Array<{
-        id: string,
-        title: string,
-        thumbnail: string,
-        point: number,
-        is_high: boolean,
-        elapsed_time: number,
-        community_id: number,
-        community_name: string,
-    }>;
-    playlistToken: string;
+        isPostLocked: boolean,
+        isHtrzm: boolean,
+        isTwitterConnection: boolean,
+    };
+    community?: {
+        id: number,
+        mainId: number,
+        name: string,
+        threadType: string, // '1'
+        globalId: string,
+    };
+    channel?: {
+        id: string, // '2630573'
+        name: string,
+        iconURL: string,
+        favoriteToken: string,
+        favoriteTokenTime: number,
+        isFavorited: boolean,
+        ngList: Array<{
+            source: string, // ''
+            destination: string, // ''
+        }>,
+        threadType: string, // '1'
+        globalId: string,
+    };
+    ad?: {
+        vastMetaData?: any,
+    };
+    lead: {
+        tagRelatedMarquee?: {
+            id: string, // '1269'
+            url: string,
+            title: string,
+        },
+        tagRelatedBanner?: any,
+        nicosdkApplicationBanner?: any,
+        videoEndBannerIn?: any,
+        videoEndOverlay?: any
+    };
+    maintenance?: any;
+    context: {
+        playFrom?: any,
+        initialPlaybackPosition?: any,
+        initialPlaybackType?: any,
+        playLength?: any,
+        returnId?: any,
+        returnTo?: any,
+        returnMsg?: any,
+        watchId: string,
+        isNoMovie?: any,
+        isNoRelatedVideo?: any,
+        isDownloadCompleteWait?: any,
+        isNoNicotic?: any,
+        isNeedPayment: boolean,
+        isAdultRatingNG: boolean,
+        isPlayable?: boolean,
+        isTranslatable: boolean,
+        isTagUneditable: boolean,
+        isVideoOwner: boolean,
+        isThreadOwner: boolean,
+        isOwnerThreadEditable?: any,
+        useChecklistCache?: any,
+        isDisabledMarquee?: any,
+        isDictionaryDisplayable: boolean,
+        isDefaultCommentInvisible: boolean,
+        accessFrom?: any,
+        csrfToken: string,
+        translationVersionJsonUpdateTime: number,
+        userkey: string,
+        watchAuthKey: string,
+        watchTrackId: string,
+        watchPageServerTime: number,
+        isAuthenticationRequired: boolean,
+        isPeakTime?: any,
+        ngRevision: number,
+        categoryName: string,
+        categoryKey: string, // 'game'
+        categoryGroupName: string,
+        categoryGroupKey: string, // 'g_culture2'
+        yesterdayRank?: any,
+        highestRank: number,
+        isMyMemory: boolean,
+        ownerNGList: Array<{ // [{ source: '', destination: '' }]
+            source: string,
+            destination: string,
+        }>,
+    };
+    liveTopics: {
+        items: Array<{
+            id: string,
+            title: string,
+            thumbnailURL: string,
+            point: number,
+            isHigh: boolean,
+            elapsedTimeM: number,
+            communityId: string,
+            communityName: string,
+        }>,
+    };
 }
+
