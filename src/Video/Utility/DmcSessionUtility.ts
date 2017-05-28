@@ -1,7 +1,7 @@
 import { DmcSession } from "../DmcSession";
-import {WatchAPIData} from "../WatchAPIData";
+import { WatchAPIData } from "../WatchAPIData";
 import Exception from "../../Exception";
-import {SessionAPIInformation} from "../SessionAPIInformation";
+import { SessionAPIInformation } from "../SessionAPIInformation";
 
 export class DmcSessionUtility {
     public static createSessionFromWatchAPIData(watchAPIData: WatchAPIData): DmcSession {
