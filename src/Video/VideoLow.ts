@@ -66,7 +66,7 @@ export namespace LowLevel {
          * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
          * @returns {Promise<WatchAPIData>}
          */
-        public async watchAPIData(videoId: string, isHTML5: boolean = true) {
+        public async watchAPIData(videoId: string, isHTML5: boolean = true): Promise<WatchAPIData> {
             let dom = cheerio.load(await this.watch(videoId, isHTML5).catch((err) => ""));
             return isHTML5 ?
                 JSON.parse(dom("#js-initial-watch-data").attr("data-api-data") || "{}") :
@@ -77,11 +77,11 @@ export namespace LowLevel {
          *
          * @param {string} videoId
          * @param {string} apiUrl
-         * @param {DmcSession} dmcSession
+         * @param {object} body
          * @returns {Promise<string>}
          */
-        public async dmcSession(videoId: string, apiUrl: string, dmcSession: DmcSession): Promise<string> {
-            return await this.requestPromise(VideoAPI.dmcsession(videoId, apiUrl, dmcSession));
+        public async dmcSession(videoId: string, apiUrl: string, body: object): Promise<string> {
+            return await this.requestPromise(VideoAPI.dmcsession(videoId, apiUrl, body));
         }
 
         /**
@@ -92,7 +92,7 @@ export namespace LowLevel {
          * @returns {Promise<string>}
          */
         public async dmcHeartbeat(videoId: string, apiUrl: string, dmcSession: DmcSession): Promise<string> {
-            return await this.requestPromise(VideoAPI.dmcheartbeat(videoId, apiUrl, dmcSession));
+            return await this.requestPromise(VideoAPI.dmcheartbeat(videoId, apiUrl, {session: dmcSession}));
         }
     }
 }

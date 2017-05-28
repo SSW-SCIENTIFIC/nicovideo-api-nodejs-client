@@ -3,161 +3,146 @@ import { xml2js } from "xml-js";
 import * as cheerio from "cheerio";
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
+import * as http from "http";
 
-import { FLVInfo } from "../Video/FLVInfo";
-import { WatchAPIData } from "../Video/WatchAPIData";
+import { WatchAPIData } from "./WatchAPIData";
+import { DmcSessionUtility } from "./Utility/DmcSessionUtility";
+
+import { LowLevel } from "./VideoLow";
 
 import { Session } from "../Session/Session";
 import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
+import {VideoInformation} from "./VideoInformation";
+import Exception from "../Exception";
+import {DmcSession} from "./DmcSession";
+import Timer = NodeJS.Timer;
 
 export class Video {
+    private lowLevel: LowLevel.Video;
     private request: typeof Request;
     private requestPromise: typeof RequestPromise;
 
     public constructor(private session: Session) {
         this.request = Request.defaults({ jar: this.session.jar });
         this.requestPromise = RequestPromise.defaults({ jar: this.session.jar });
+        this.lowLevel = new LowLevel.Video(this.session);
     }
 
-    public async getThumbInfo_Raw(movieId: string): Promise<string> {
-        return this.requestPromise(VideoAPI.getthumbinfo(movieId));
+    public async getWatchData(videoId: string): Promise<WatchAPIData> {
+        return (await this.lowLevel.watchAPIData(videoId));
     }
 
-    public async getThumbInfo(movieId: string) {
-        return xml2js(await this.getThumbInfo_Raw(movieId), { compact: true });
-    }
+    public async downloadFromSmile(videoId: string): Promise<Buffer>;
+    public async downloadFromSmile(videoInfo: VideoInformation): Promise<Buffer>;
+    public async downloadFromSmile(param: string | VideoInformation): Promise<Buffer> {
+        let videoInfo: VideoInformation;
 
-    public async watchAPI_Raw(movieId: string, isHTML5: boolean = false): Promise<string> {
-        this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1": "0")), APIUrl.WATCH + movieId);
-        return this.requestPromise(VideoAPI.watch(movieId));
-    }
-
-    public async getFLV_Raw(movieId: string) {
-//        await this.watchAPI_Raw(movieId);
-        return this.requestPromise(VideoAPI.getflv(movieId));
-    }
-
-    public async getFLV(movieId: string) {
-        return QueryString.parse(await this.getFLV_Raw(movieId));
-    }
-
-    public async downloadFLV(movieId: string): Promise<Buffer> {
-        let getFLVResult = await this.getFLV(movieId);
-        await this.watchAPI_Raw(movieId);
-        return this.requestPromise(VideoAPI.downloadsmile(movieId, getFLVResult.url));
-    }
-
-    public async streamingFLV(movieId: string): Promise<Request.Request> {
-        let getFLVResult = await this.getFLV(movieId);
-        await this.watchAPI_Raw(movieId);
-        return this.request(VideoAPI.downloadsmile(movieId, getFLVResult.url));
-    }
-
-    public async watchAPIData(movieId: string) {
-        let dom = cheerio.load(await this.watchAPI_Raw(movieId));
-        return JSON.parse(dom("#watchAPIDataContainer").text());
-    }
-
-    public async dmcInfo(movieId: string) {
-        let watchAPIData = (await this.watchAPIData(movieId)).flashvars;
-        if (watchAPIData.isDmc !== 1) {
-            throw new Error("No DMC Available.");
+        if (typeof param === "string") {
+            videoInfo = (await this.getWatchData(param)).video;
+        } else {
+            videoInfo = param;
+            await this.lowLevel.watch(videoInfo.id);
         }
 
-        return JSON.parse(decodeURIComponent(watchAPIData.dmcInfo));
+        return await this.requestPromise(VideoAPI.downloadsmile(videoInfo.id, videoInfo.smileInfo.url));
     }
 
-    public async dmcSession(movieId: string, dmcInfo, session: any = {}): Promise<string> {
-//        let dmcInfo = (await this.dmcInfo(movieId)).session_api;
-        session = Object.assign({
-            session: {
-                recipe_id: dmcInfo.recipe_id,
-                content_id: dmcInfo.content_id,
-                content_type: "movie",
-                content_src_id_sets: [
-                    {
-                        content_src_ids: [
-                            {
-                                src_id_to_mux: {
-                                    video_src_ids: dmcInfo.videos,
-                                    audio_src_ids: dmcInfo.audios
-                                }
-                            }
-                        ]
-                    }
-                ],
-                timing_constraint: "unlimited",
-                keep_method: { heartbeat: { lifetime: 60000 } },
-                protocol: {
-                    name: dmcInfo.protocols[0],
-                    parameters: {
-                        http_parameters: {
-                            parameters: {
-                                http_output_download_parameters: {
-                                    use_well_known_port: "no",
-                                    use_ssl: "no"
-                                }
-                            }
-                        }
-                    }
-                },
-                content_uri: "",
-                session_operation_auth: {
-                    session_operation_auth_by_signature: {
-                        token: decodeURIComponent(dmcInfo.token),
-                        signature: dmcInfo.signature
-                    }
-                },
-                content_auth: {
-                    auth_type: dmcInfo.auth_types.http,
-                    content_key_timeout: 600000,
-                    service_id: "nicovideo",
-                    service_user_id: dmcInfo.service_user_id
-                },
-                client_info: { player_id: dmcInfo.player_id },
-                priority: 0.8
-            }
-        }, session);
+    public async streamFromSmile(videoId: string): Promise<Request.Request>;
+    public async streamFromSmile(videoInfo: VideoInformation): Promise<Request.Request>;
+    public async streamFromSmile(param: string | VideoInformation): Promise<Request.Request> {
+        let videoInfo: VideoInformation;
 
-        // return this.session.request({
-        //     url: dmcInfo.api_urls[0] + "?_format=json",
-        //     method: "options",
-        //     headers: {
-        //         "Access-Control-Request-Method": "POST",
-        //         "Access-Control-Request-Headers": "content-type",
-        //         "Origin": "http://www.nicovideo.jp"
-        //     },
-        // }).then((response) => {
-            return this.requestPromise(VideoAPI.dmcsession(movieId, dmcInfo.api_urls[0], session));
+        if (typeof param === "string") {
+            videoInfo = (await this.getWatchData(param)).video;
+        } else {
+            videoInfo = param;
+            await this.lowLevel.watch(videoInfo.id);
+        }
+
+        return this.request(VideoAPI.downloadsmile(videoInfo.id, videoInfo.smileInfo.url));
     }
 
-    public async dmcSessionData(movieId: string, dmcInfo) {
-        return JSON.parse(await this.dmcSession(movieId, dmcInfo));
+    public async createDmcSession(watchAPIData: WatchAPIData): Promise<DmcSession> {
+        if (!watchAPIData.video.dmcInfo) {
+            throw new Exception();
+        }
+        return JSON.parse(await this.lowLevel.dmcSession(
+            watchAPIData.video.id,
+            watchAPIData.video.dmcInfo.session_api.api_urls[0],
+            {session: DmcSessionUtility.createSessionFromWatchAPIData(watchAPIData)},
+        )).data.session;
     }
 
-    public async downloadDmc(movieId: string): Promise<Buffer> {
-        let dmcInfo = (await this.dmcInfo(movieId)).session_api;
-        let sessionData = (await this.dmcSessionData(movieId, dmcInfo)).data;
+    public async downloadFromDmc(videoId: string): Promise<Buffer>;
+    public async downloadFromDmc(watchAPIData: WatchAPIData): Promise<Buffer>;
+    public async downloadFromDmc(param: string | WatchAPIData): Promise<Buffer> {
+        let watchAPIData: WatchAPIData;
 
-        let intervalId = setInterval(() => {
+        if (typeof param === "string") {
+            watchAPIData = (await this.getWatchData(param));
+        } else {
+            watchAPIData = param;
+        }
+
+        if (!watchAPIData.video.dmcInfo) {
+            throw new Exception();
+        }
+
+        const session: DmcSession = await this.createDmcSession(watchAPIData);
+        const id: string = watchAPIData.video.id;
+        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.api_urls[0];
+
+        const intervalId: Timer = setInterval(() => {
             console.log("beating...");
-            return this.requestPromise(VideoAPI.dmcheartbeat(movieId, dmcInfo.api_urls[0], sessionData));
-        }, sessionData.session.keep_method.heartbeat.lifetime * 0.9);
+            return this.lowLevel.dmcHeartbeat(id, apiUrl, session)
+        }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return this.requestPromise(VideoAPI.downloaddmc(movieId, sessionData.session.content_uri))
+        return this.requestPromise(VideoAPI.downloaddmc(id, session.content_uri))
             .finally(() => clearInterval(intervalId));
     }
 
-    public async streamingDmc(movieId: string): Promise<Request.Request> {
-        let dmcInfo = (await this.dmcInfo(movieId)).session_api;
-        let sessionData = (await this.dmcSessionData(movieId, dmcInfo)).data;
+    public async streamFromDmc(videoId: string): Promise<Request.Request>;
+    public async streamFromDmc(watchAPIData: WatchAPIData): Promise<Request.Request>;
+    public async streamFromDmc(param: string | WatchAPIData): Promise<Request.Request> {
+        let watchAPIData: WatchAPIData;
 
-        let intervalId = setInterval(() => {
+        if (typeof param === "string") {
+            watchAPIData = (await this.getWatchData(param));
+        } else {
+            watchAPIData = param;
+        }
+
+        if (!watchAPIData.video.dmcInfo) {
+            throw new Exception();
+        }
+
+        const session: DmcSession = await this.createDmcSession(watchAPIData);
+        const id: string = watchAPIData.video.id;
+        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.api_urls[0];
+
+        const intervalId: Timer = setInterval(() => {
             console.log("beating...");
-            return this.requestPromise(VideoAPI.dmcheartbeat(movieId, dmcInfo.api_urls[0], sessionData));
-        }, sessionData.session.keep_method.heartbeat.lifetime * 0.9);
+            return this.lowLevel.dmcHeartbeat(id, apiUrl, session)
+        }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return this.request(VideoAPI.downloaddmc(movieId, sessionData.session.content_uri), () => clearInterval(intervalId));
+        return this.request(
+            VideoAPI.downloaddmc(watchAPIData.video.id, session.content_uri),
+            () => clearInterval(intervalId),
+        );
+    }
+
+    /**
+     *
+     * @param videoId
+     * @returns {Promise<void>}
+     * @todo implement
+     */
+    public async downloadVideo(videoId: string) {
+        const request = (await this.streamFromDmc(videoId));
+        request.on("response", (response: http.IncomingMessage) : void => {
+            request.abort();
+
+        });
     }
 }

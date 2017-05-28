@@ -96,14 +96,14 @@ export namespace Video {
      * Returns request-promise options to start session for dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {DmcSession} dmcSession
+     * @param {object} body
      * @returns {RequestPromise.Options}
      */
-    export function dmcsession(videoId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
+    export function dmcsession(videoId: string, apiUrl: string, body: object): RequestPromise.Options {
         return {
             uri: apiUrl + "/?_format=json",
             method: "POST",
-            body: JSON.stringify(dmcSession),
+            body: JSON.stringify(body),
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export namespace Video {
      * @param {DmcSession} dmcSession
      * @returns {RequestPromise.Options}
      */
-    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSession: DmcSession): RequestPromise.Options {
+    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSession: {session: DmcSession}): RequestPromise.Options {
         return {
             uri: apiUrl + "/" + dmcSession.session.id + "?_format=json&_method=PUT",
             method: "POST",
@@ -152,12 +152,15 @@ export namespace Video {
             },
         };
     }
-}
 
-export namespace Comment{
+    export type CommentVersion = "20061206" | "20090904";
+    export namespace CommentVersion {
+        const V20061206: CommentVersion = "20061206";
+        const V20090904: CommentVersion = "20090904";
+    }
     export function getcomment(messageServerUrl: string, thread: number, num: number): RequestPromise.Options {
         return {
-            method: "GET",
+            method: "POST",
             uri: messageServerUrl,
             useQuerystring: true,
             qs: {
