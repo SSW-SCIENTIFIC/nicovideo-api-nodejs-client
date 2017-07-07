@@ -122,8 +122,8 @@ export namespace Video {
      */
     export function dmcheartbeat(videoId: string, apiUrl: string, dmcSession: {session: DmcSession}): RequestPromise.Options {
         return {
-            uri: apiUrl + "/" + dmcSession.session.id + "?_format=json&_method=PUT",
-            method: "POST",
+            uri: apiUrl + "/" + dmcSession.session.id + "?_format=json",
+            method: "PUT",
             body: JSON.stringify(dmcSession),
             headers: {
                 "Accept": "application/json",
@@ -153,21 +153,26 @@ export namespace Video {
         };
     }
 
-    export type CommentVersion = "20061206" | "20090904";
-    export namespace CommentVersion {
-        const V20061206: CommentVersion = "20061206";
-        const V20090904: CommentVersion = "20090904";
-    }
-    export function getcomment(messageServerUrl: string, thread: number, num: number): RequestPromise.Options {
+    export function getcomment(body: string): Request.Options {
         return {
             method: "POST",
-            uri: messageServerUrl,
-            useQuerystring: true,
-            qs: {
-                version: 20090904,
-                thread: thread,
-                res_from: num,
-            },
+            uri: "http://nmsg.nicovideo.jp/api/",
+            body: body,
+        };
+    }
+
+    export function getcommentjson(body: string): Request.Options {
+        return {
+            method: "POST",
+            uri: "http://nmsg.nicovideo.jp/api.json/",
+            body: body,
+        };
+    }
+
+    export function getthreadkey(threadId: string): Request.Options {
+        return {
+            method: "GET",
+            uri: "http://flapi.nicovideo.jp/api/getthreadkey?thread=" + threadId,
         };
     }
 }

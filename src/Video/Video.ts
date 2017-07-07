@@ -16,7 +16,7 @@ import * as APIUrl from "../APIUrls";
 import {VideoInformation} from "./VideoInformation";
 import Exception from "../Exception";
 import {DmcSession} from "./DmcSession";
-import Timer = NodeJS.Timer;
+import * as qs from "querystring";
 
 export class Video {
     private lowLevel: LowLevel.Video;
@@ -69,7 +69,7 @@ export class Video {
         }
         return JSON.parse(await this.lowLevel.dmcSession(
             watchAPIData.video.id,
-            watchAPIData.video.dmcInfo.session_api.api_urls[0],
+            watchAPIData.video.dmcInfo.session_api.urls[0].url,
             {session: DmcSessionUtility.createSessionFromWatchAPIData(watchAPIData)},
         )).data.session;
     }
@@ -91,9 +91,9 @@ export class Video {
 
         const session: DmcSession = await this.createDmcSession(watchAPIData);
         const id: string = watchAPIData.video.id;
-        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.api_urls[0];
+        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.urls[0].url;
 
-        const intervalId: Timer = setInterval(() => {
+        const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
             return this.lowLevel.dmcHeartbeat(id, apiUrl, session)
         }, session.keep_method.heartbeat.lifetime * 0.9);
@@ -119,9 +119,9 @@ export class Video {
 
         const session: DmcSession = await this.createDmcSession(watchAPIData);
         const id: string = watchAPIData.video.id;
-        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.api_urls[0];
+        const apiUrl: string = watchAPIData.video.dmcInfo.session_api.urls[0].url;
 
-        const intervalId: Timer = setInterval(() => {
+        const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
             return this.lowLevel.dmcHeartbeat(id, apiUrl, session)
         }, session.keep_method.heartbeat.lifetime * 0.9);
@@ -144,5 +144,19 @@ export class Video {
             request.abort();
 
         });
+    }
+
+    public async getThreadKey(threadId: string): Promise<{ threadkey: string, force_184: string }> {
+         return qs.parse(await this.lowLevel.getThreadKey(threadId));
+    }
+
+    public async getComment(watchAPIData: WatchAPIData) {
+        let requestBody;
+
+        if (watchAPIData.video.isOfficial) {
+            const keys = await this.getThreadKey(watchAPIData.thread.ids.nicos || watchAPIData.thread.ids.community);
+        } else {
+
+        }
     }
 }

@@ -94,5 +94,17 @@ export namespace LowLevel {
         public async dmcHeartbeat(videoId: string, apiUrl: string, dmcSession: DmcSession): Promise<string> {
             return await this.requestPromise(VideoAPI.dmcheartbeat(videoId, apiUrl, {session: dmcSession}));
         }
+
+        public async getThreadKey(threadId: string): Promise<string> {
+            return await this.requestPromise(VideoAPI.getthreadkey(threadId));
+        }
+
+        public async getComment(body: string): Promise<string> {
+            return await this.requestPromise(VideoAPI.getcomment(body));
+        }
+
+        public async getCommentJSON(body: string): Promise<string> {
+            return await this.requestPromise(VideoAPI.getcommentjson(body));
+        }
     }
 }

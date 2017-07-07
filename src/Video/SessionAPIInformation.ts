@@ -1,5 +1,4 @@
 export interface SessionAPIInformation {
-    api_urls: Array<string>;
     urls: Array<{
         url: string;
         is_well_known_port: boolean;
