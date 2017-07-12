@@ -8,7 +8,7 @@ import * as http from "http";
 import { WatchAPIData } from "./WatchAPIData";
 import { DmcSessionUtility } from "./Utility/DmcSessionUtility";
 
-import { LowLevel } from "./VideoLow";
+import * as VideoLow from "./VideoLow";
 
 import { Session } from "../Session/Session";
 import { Video as VideoAPI } from "../APIEntryPoints";
@@ -19,14 +19,14 @@ import {DmcSession} from "./DmcSession";
 import * as qs from "querystring";
 
 export class Video {
-    private lowLevel: LowLevel.Video;
+    private lowLevel: VideoLow.Video;
     private request: typeof Request;
     private requestPromise: typeof RequestPromise;
 
     public constructor(private session: Session) {
         this.request = Request.defaults({ jar: this.session.jar });
         this.requestPromise = RequestPromise.defaults({ jar: this.session.jar });
-        this.lowLevel = new LowLevel.Video(this.session);
+        this.lowLevel = new VideoLow.Video(this.session);
     }
 
     public async getWatchData(videoId: string): Promise<WatchAPIData> {
