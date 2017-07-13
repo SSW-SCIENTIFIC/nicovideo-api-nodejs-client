@@ -18,6 +18,8 @@ import Exception from "../Exception";
 import {DmcSession} from "./DmcSession";
 import * as qs from "querystring";
 
+export * from "./WatchAPIData";
+
 export class Video {
     private lowLevel: VideoLow.Video;
     private request: typeof Request;
