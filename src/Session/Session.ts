@@ -7,7 +7,7 @@ import * as APIUrl from "../APIUrls";
 import SessionException from "./SessionException";
 
 type Cookie = typeof ToughCookie.Cookie;
-type ToughCookieJar = typeof ToughCookie.CookieJar;
+export type ToughCookieJar = typeof ToughCookie.CookieJar;
 
 /**
  * Class representing a session for NicoNico Video.
