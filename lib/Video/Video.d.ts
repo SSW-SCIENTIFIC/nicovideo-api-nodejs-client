@@ -1,7 +1,7 @@
 /// <reference types="node" />
 /// <reference types="request" />
 import * as Request from "request";
-import { WatchAPIData } from "./WatchAPIData";
+import { WatchData } from "./WatchAPIData";
 import { Session } from "../Session/Session";
 import { VideoInformation } from "./VideoInformation";
 import { DmcSession } from "./DmcSession";
@@ -12,16 +12,16 @@ export declare class Video {
     private request;
     private requestPromise;
     constructor(session: Session);
-    getWatchData(videoId: string): Promise<WatchAPIData>;
+    getWatchData(videoId: string): Promise<WatchData>;
     downloadFromSmile(videoId: string): Promise<Buffer>;
     downloadFromSmile(videoInfo: VideoInformation): Promise<Buffer>;
     streamFromSmile(videoId: string): Promise<Request.Request>;
     streamFromSmile(videoInfo: VideoInformation): Promise<Request.Request>;
-    createDmcSession(watchAPIData: WatchAPIData): Promise<DmcSession>;
+    createDmcSession(watchAPIData: WatchData): Promise<DmcSession>;
     downloadFromDmc(videoId: string): Promise<Buffer>;
-    downloadFromDmc(watchAPIData: WatchAPIData): Promise<Buffer>;
+    downloadFromDmc(watchAPIData: WatchData): Promise<Buffer>;
     streamFromDmc(videoId: string): Promise<Request.Request>;
-    streamFromDmc(watchAPIData: WatchAPIData): Promise<Request.Request>;
+    streamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
     /**
      *
      * @param videoId
@@ -33,5 +33,5 @@ export declare class Video {
         threadkey: string;
         force_184: string;
     }>;
-    getComment(watchAPIData: WatchAPIData): Promise<void>;
+    getComment(watchAPIData: WatchData): Promise<void>;
 }

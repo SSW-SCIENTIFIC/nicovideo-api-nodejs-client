@@ -1,10 +1,10 @@
 import { DmcSession } from "../DmcSession";
-import { WatchAPIData } from "../WatchAPIData";
+import { WatchData } from "../../Common";
 import Exception from "../../Exception";
 import { SessionAPIInformation } from "../SessionAPIInformation";
 
 export class DmcSessionUtility {
-    public static createSessionFromWatchAPIData(watchAPIData: WatchAPIData): DmcSession {
+    public static createSessionFromWatchAPIData(watchAPIData: WatchData): DmcSession {
         if (!watchAPIData.video.dmcInfo) {
             throw new Exception();
         }

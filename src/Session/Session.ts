@@ -1,4 +1,4 @@
-import * as Request from "request-promise";
+import * as Request from "request";
 import * as RequestPromise from "request-promise";
 import ToughCookie from "tough-cookie";
 

@@ -1,5 +1,5 @@
 import { DmcSession } from "../DmcSession";
-import { WatchAPIData } from "../WatchAPIData";
+import { WatchData } from "../../Common";
 export declare class DmcSessionUtility {
-    static createSessionFromWatchAPIData(watchAPIData: WatchAPIData): DmcSession;
+    static createSessionFromWatchAPIData(watchAPIData: WatchData): DmcSession;
 }

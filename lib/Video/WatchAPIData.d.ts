@@ -2,7 +2,7 @@ import { PlaylistItem } from "./PlaylistItem";
 import { Tag } from "./Tag";
 import { ThreadInformation } from "./ThreadInformation";
 import { VideoInformation } from "./VideoInformation";
-export interface WatchAPIData {
+export interface WatchData {
     video: VideoInformation;
     player?: {
         playerInfoXMLUpdateTIme: number;

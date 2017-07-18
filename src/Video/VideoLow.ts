@@ -4,7 +4,7 @@ import * as cheerio from "cheerio";
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
 
-import {WatchAPIData} from "./WatchAPIData";
+import {WatchData} from "./WatchAPIData";
 
 import {Session} from "../Session/Session";
 import {Video as VideoAPI} from "../APIEntryPoints";
@@ -63,9 +63,9 @@ export class Video {
      * Returns watch API data.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
-     * @returns {Promise<WatchAPIData>}
+     * @returns {Promise<WatchData>}
      */
-    public async watchAPIData(videoId: string, isHTML5: boolean = true): Promise<WatchAPIData> {
+    public async watchAPIData(videoId: string, isHTML5: boolean = true): Promise<WatchData> {
         let dom = cheerio.load(await this.watch(videoId, isHTML5).catch((err) => ""));
         return isHTML5 ?
             JSON.parse(dom("#js-initial-watch-data").attr("data-api-data") || "{}") :

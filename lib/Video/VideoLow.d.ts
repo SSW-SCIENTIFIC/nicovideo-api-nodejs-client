@@ -1,4 +1,4 @@
-import { WatchAPIData } from "./WatchAPIData";
+import { WatchData } from "./WatchAPIData";
 import { Session } from "../Session/Session";
 import { DmcSession } from "./DmcSession";
 /**
@@ -36,9 +36,9 @@ export declare class Video {
      * Returns watch API data.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
-     * @returns {Promise<WatchAPIData>}
+     * @returns {Promise<WatchData>}
      */
-    watchAPIData(videoId: string, isHTML5?: boolean): Promise<WatchAPIData>;
+    watchAPIData(videoId: string, isHTML5?: boolean): Promise<WatchData>;
     /**
      *
      * @param {string} videoId

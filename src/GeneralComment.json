@@ -1,0 +1,1053 @@
+[
+  {
+    "thread": {
+      "resultcode": 0,
+      "thread": "1489327132",
+      "server_time": 1496503495,
+      "last_res": 70,
+      "ticket": "0x07bace97",
+      "revision": 1
+    }
+  },
+  {
+    "leaf": {
+      "thread": "1489327132",
+      "count": 32
+    }
+  },
+  {
+    "leaf": {
+      "thread": "1489327132",
+      "leaf": 1,
+      "count": 8
+    }
+  },
+  {
+    "leaf": {
+      "thread": "1489327132",
+      "leaf": 2,
+      "count": 5
+    }
+  },
+  {
+    "leaf": {
+      "thread": "1489327132",
+      "leaf": 3,
+      "count": 17
+    }
+  },
+  {
+    "leaf": {
+      "thread": "1489327132",
+      "leaf": 4,
+      "count": 8
+    }
+  },
+  {
+    "global_num_res": {
+      "thread": "1489327132",
+      "num_res": 70
+    }
+  },
+  {
+    "thread": {
+      "resultcode": 0,
+      "thread": "1489327132",
+      "server_time": 1496503495,
+      "last_res": 70,
+      "ticket": "0x07bace97",
+      "revision": 1
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 1,
+      "vpos": 2279,
+      "date": 1489327293,
+      "date_usec": 309495,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ygs7glw9Pt2PTSliirPVbeWG9ns",
+      "mail": "184",
+      "content": "うぽつ　今回キツイと思うの"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 2,
+      "vpos": 940,
+      "date": 1489327296,
+      "date_usec": 355211,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "1BUGnPliH2WLl9-20PF-O1v-tfQ",
+      "mail": "184",
+      "content": "お久？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 3,
+      "vpos": 5986,
+      "date": 1489327340,
+      "date_usec": 837849,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "jYquItXgnEWbTOMFflxpSTXaHto",
+      "mail": "184",
+      "content": "Twitterだと透過にならない可能性もあるからね"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 4,
+      "vpos": 1865,
+      "date": 1489327360,
+      "date_usec": 63206,
+      "anonymity": 1,
+      "user_id": "i4fxT71DvzAtHAvSAoDdWkEVdfU",
+      "mail": "184",
+      "content": "今回はまじで期待してるわ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 5,
+      "vpos": 3318,
+      "date": 1489327393,
+      "date_usec": 763563,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "q0hE6LghuS0YyOVBitJZ8sLKfE0",
+      "mail": "184",
+      "content": "懐かしい歌だぁ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 6,
+      "vpos": 1785,
+      "date": 1489327511,
+      "date_usec": 262862,
+      "anonymity": 1,
+      "user_id": "7rFH3wvDo9lZ4DjlXrZvXp-oA2M",
+      "mail": "184",
+      "content": "黒弓、天馬をどうするか"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 7,
+      "vpos": 274,
+      "date": 1489327533,
+      "date_usec": 762658,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "S5x7iRPAb7AbkrVZxfkd8W_xZSY",
+      "mail": "184",
+      "content": "うぽつですー"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 8,
+      "vpos": 24684,
+      "leaf": 4,
+      "date": 1489327572,
+      "date_usec": 592420,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "9-_t6At-0Pe5sBmpd3kqFJcGSaI",
+      "mail": "184",
+      "content": "88888"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 9,
+      "vpos": 688,
+      "date": 1489327814,
+      "date_usec": 932227,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "lV4JkHV_vVp5P7B1XuQiAeuT5MM",
+      "mail": "184",
+      "content": "いやぁ・・・無理やろ？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 10,
+      "vpos": 23802,
+      "leaf": 3,
+      "date": 1489327826,
+      "date_usec": 924632,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "iRhYBHIHFrSVF1y4rWVnCMzADAc",
+      "mail": "184",
+      "content": "思うｊが"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 11,
+      "vpos": 23178,
+      "leaf": 3,
+      "date": 1489328072,
+      "date_usec": 378547,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "lV4JkHV_vVp5P7B1XuQiAeuT5MM",
+      "mail": "184",
+      "content": "これは折れた盤面ですねぇ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 12,
+      "vpos": 2780,
+      "date": 1489328314,
+      "date_usec": 79188,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "csBfAHoT9url04EXPKddCC7CY4w",
+      "mail": "184",
+      "content": "マジで銀だと辛いMAP"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 13,
+      "vpos": 0,
+      "date": 1489328749,
+      "date_usec": 904951,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ijTaKyF0QnoGTFt9XdSK0-wrJ6w",
+      "mail": "184",
+      "content": "おつー"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 14,
+      "vpos": 10599,
+      "leaf": 1,
+      "date": 1489328934,
+      "date_usec": 696445,
+      "anonymity": 1,
+      "user_id": "igGjvhCQ0Jo2gMR5lsF_o6yaDpE",
+      "mail": "184",
+      "content": "ジークさん相手の手段がないし500は無理じゃない？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 15,
+      "vpos": 24071,
+      "leaf": 4,
+      "date": 1489329109,
+      "date_usec": 603965,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "iNwWCSvyyLvsJ17SoLD1iGNZLFQ",
+      "mail": "184",
+      "content": "初見でなんで全滅したのかわからなかったわｗ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 16,
+      "vpos": 10561,
+      "leaf": 1,
+      "date": 1489329125,
+      "date_usec": 210999,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "It8Mel_x9aznNFy-8gbrpPSuLZY",
+      "mail": "184",
+      "content": "400超えたあたりからガチできついからな～"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 17,
+      "vpos": 23292,
+      "leaf": 3,
+      "date": 1489329269,
+      "date_usec": 349404,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "It8Mel_x9aznNFy-8gbrpPSuLZY",
+      "mail": "184",
+      "content": "こいつら無茶苦茶数多い上に硬いしラピスまでくるしで銀だとどうするんだろうな"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 18,
+      "vpos": 25207,
+      "leaf": 4,
+      "date": 1489329857,
+      "date_usec": 377581,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "5nFHvGa8AUCjZ7cny-AWlxNmTEo",
+      "mail": "184",
+      "content": "楽しみだ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 19,
+      "vpos": 22894,
+      "leaf": 3,
+      "date": 1489330541,
+      "date_usec": 883967,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ijTaKyF0QnoGTFt9XdSK0-wrJ6w",
+      "mail": "184",
+      "content": "キレイに整地していくラピス・・・"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 20,
+      "vpos": 2301,
+      "date": 1489331391,
+      "date_usec": 135526,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "SvjIUyZOicm6OCChdz3LbvkzSF4",
+      "mail": "184",
+      "content": "１２万円ソドマスはどう考えても無理すぐるｗｗｗ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 21,
+      "vpos": 669,
+      "date": 1489334004,
+      "date_usec": 944977,
+      "anonymity": 1,
+      "user_id": "SLDjNRy38rDcvR-8QRq5221liJ4",
+      "mail": "184",
+      "content": "今回もチグリ運ゲーの予感しかしないなw"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 22,
+      "vpos": 24094,
+      "leaf": 4,
+      "date": 1489334281,
+      "date_usec": 537992,
+      "anonymity": 1,
+      "user_id": "SLDjNRy38rDcvR-8QRq5221liJ4",
+      "mail": "184",
+      "content": "ラピスに気を取られて後から来る黒弓に殲滅されました（半ギレ）"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 23,
+      "vpos": 3822,
+      "date": 1489335617,
+      "date_usec": 689456,
+      "premium": 1,
+      "user_id": "3602310",
+      "content": "女神の呪縛って縛ってないんだっけ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 24,
+      "vpos": 16529,
+      "leaf": 2,
+      "date": 1489336498,
+      "date_usec": 801276,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "9LWWhoJy8AMilPNqjs3ai5s3Uac",
+      "mail": "184",
+      "content": "ジョバニキの出番か？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 25,
+      "vpos": 1156,
+      "date": 1489338083,
+      "date_usec": 431945,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "01nLTcyEfiMY7XV1gtDbV_Ay_Fw",
+      "mail": "184",
+      "content": "ひさびさにガチヤバ大討伐きたな"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 26,
+      "vpos": 3597,
+      "date": 1489338347,
+      "date_usec": 371599,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "PJA0AgH3aFXxghJ3n3I8P9_8dZ8",
+      "mail": "184",
+      "content": "今回数人刻みのデッドヒートが繰り返されそうで楽しみ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 27,
+      "vpos": 25207,
+      "leaf": 4,
+      "date": 1489350678,
+      "date_usec": 681842,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "kcipynRmp4AjNq5eSyrSJX2XfWM",
+      "mail": "184",
+      "content": "やんややんや"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 28,
+      "vpos": 21782,
+      "leaf": 3,
+      "date": 1489351812,
+      "date_usec": 610889,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "JfMXKAAbwi7g8ussJqhBChKAMPM",
+      "mail": "184",
+      "content": "右のラピスもやばいけど左のフェルミもやばいっていうね"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 29,
+      "vpos": 954,
+      "date": 1489359473,
+      "date_usec": 339266,
+      "anonymity": 1,
+      "user_id": "0WhSCwbJXF4TjyKRYpa6aPOVo9w",
+      "mail": "184",
+      "content": "チグリ運ゲーでジークを無力化しろって…？（冷や汗）"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 30,
+      "vpos": 7607,
+      "leaf": 1,
+      "date": 1489361748,
+      "date_usec": 428023,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "IMtjBVWKfXkUaTrhG3_v25FysbQ",
+      "mail": "184",
+      "content": "筋張ってて噛み切れないレベル"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 31,
+      "vpos": 3904,
+      "date": 1489361857,
+      "date_usec": 331376,
+      "anonymity": 1,
+      "user_id": "1kONodOm687e0HMW_TzniuVdCqM",
+      "mail": "184",
+      "content": "今回は本気で400もいけないんじゃないかと思ってる"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 32,
+      "vpos": 23304,
+      "leaf": 3,
+      "date": 1489363602,
+      "date_usec": 756886,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "fZ855Sh93yfZkE80pFIyMZ0nas4",
+      "mail": "184",
+      "content": "なおラピスはご満悦の模様"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 33,
+      "vpos": 10147,
+      "leaf": 1,
+      "date": 1489366871,
+      "date_usec": 500099,
+      "anonymity": 1,
+      "user_id": "GwM7Q7n5tWp40wzrTTdMM5v1u_w",
+      "mail": "184",
+      "content": "今回はあえて序盤スルーも選択肢になってきそう。"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 34,
+      "vpos": 15164,
+      "leaf": 2,
+      "date": 1489371167,
+      "date_usec": 397408,
+      "anonymity": 1,
+      "user_id": "_voBOqsyKUBc49FTUbFjDrxVYRg",
+      "mail": "184",
+      "content": "おおーさすがだわ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 35,
+      "vpos": 1173,
+      "date": 1489375649,
+      "date_usec": 270844,
+      "anonymity": 1,
+      "user_id": "0f9jcOdm-oMzvEFHto6meyYo0Mo",
+      "mail": "184",
+      "content": "隙のない男前"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 36,
+      "vpos": 6381,
+      "leaf": 1,
+      "date": 1489375716,
+      "date_usec": 79207,
+      "anonymity": 1,
+      "user_id": "0f9jcOdm-oMzvEFHto6meyYo0Mo",
+      "mail": "184",
+      "content": "テミスちゃんちょっとかがんで！"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 37,
+      "vpos": 23348,
+      "leaf": 3,
+      "date": 1489381380,
+      "date_usec": 439004,
+      "anonymity": 1,
+      "user_id": "11LCppsfpHMkesIY9JV8Hu9ZPYw",
+      "mail": "184",
+      "content": "ひえっ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 38,
+      "vpos": 17373,
+      "leaf": 2,
+      "date": 1489389008,
+      "date_usec": 606900,
+      "anonymity": 1,
+      "user_id": "KXqQGEfIjaSeEtT7dpz6JeZFX6Y",
+      "mail": "184",
+      "content": "一晩でやってくれうひとかな"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 39,
+      "vpos": 1561,
+      "date": 1489389212,
+      "date_usec": 976534,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "xg5Yj4jigjvSDBodG1bx2Xkx0EQ",
+      "mail": "184",
+      "content": "どこまでいくんだろな"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 40,
+      "vpos": 13819,
+      "leaf": 2,
+      "date": 1489397384,
+      "date_usec": 103223,
+      "anonymity": 1,
+      "user_id": "tJe3QZ6jkRMf5cIKl_UDtO3aBcM",
+      "mail": "184",
+      "content": "やっぱり運ゲーじゃないかー(呆れ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 41,
+      "vpos": 4770,
+      "date": 1489400634,
+      "date_usec": 584468,
+      "anonymity": 1,
+      "user_id": "8_HCdw-ebkRp5MrBZgZsv_CaClI",
+      "mail": "184",
+      "content": "黒由美ラッシュが無理そう"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 42,
+      "vpos": 21727,
+      "leaf": 3,
+      "date": 1489401398,
+      "date_usec": 730438,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "UUX6ZnxD-9TdH_YPWd5UouAVB3c",
+      "mail": "184",
+      "content": "最近帝国ユニ必須みたいな風潮だけど王国軍でもがんばれるもんだな"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 43,
+      "vpos": 1706,
+      "date": 1489404604,
+      "date_usec": 306306,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "5-Fdi1xk1EtJVD3RTU9KpFbrWIg",
+      "mail": "184",
+      "content": "チグリでジーク攻略するやつ居たら脱帽だな…"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 44,
+      "vpos": 906,
+      "date": 1489405726,
+      "date_usec": 988939,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "SpXyLl52vMbuYX6ay6OfudyboNA",
+      "mail": "184",
+      "content": "今回きつそう"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 45,
+      "vpos": 2518,
+      "date": 1489405743,
+      "date_usec": 305574,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "SpXyLl52vMbuYX6ay6OfudyboNA",
+      "mail": "184",
+      "content": "ジークまでいかないだろ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 46,
+      "vpos": 1343,
+      "date": 1489409970,
+      "date_usec": 42932,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "CU2kyt1YYgq2Fz7tpEyTO4PntMs",
+      "mail": "184",
+      "content": "無理そう"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 47,
+      "vpos": 3467,
+      "date": 1489413128,
+      "date_usec": 980363,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "7NlQRScom9WSFWcluB-HAVYDTOc",
+      "mail": "184",
+      "content": "今回の演習で銀は流石にマゾいｗガバ１と変わらん祭りになりそうｗ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 48,
+      "vpos": 9093,
+      "leaf": 1,
+      "date": 1489417686,
+      "date_usec": 702825,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "02n6XEARr6NUfx0GrWI_6YIo3rw",
+      "mail": "184",
+      "content": "ペガサスちゃんも活躍しそう"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 49,
+      "vpos": 1837,
+      "date": 1489457795,
+      "date_usec": 358974,
+      "anonymity": 1,
+      "user_id": "S_a0EwVsdL8-INPzwTpQaPhLGs0",
+      "mail": "184",
+      "content": "正気かよ・・・"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 50,
+      "vpos": 23533,
+      "leaf": 3,
+      "date": 1489470375,
+      "date_usec": 725452,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "E4egQpLDzRFPO31LJoGTZv3Zqmk",
+      "mail": "184",
+      "content": "まるで俺の初見みたいだぁ･･･"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 51,
+      "vpos": 4449,
+      "date": 1489474907,
+      "date_usec": 566848,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "8LXRwqZGtJgCqga_9DyfiIWFyjk",
+      "mail": "184",
+      "content": "ラピスゾーンどーすんだろ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 52,
+      "vpos": 23267,
+      "leaf": 3,
+      "date": 1489501616,
+      "date_usec": 511918,
+      "score": -3,
+      "premium": 1,
+      "user_id": "3003731",
+      "content": "ラピス様強すぎｗ皇帝で降りる前に倒したわ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 53,
+      "vpos": 21778,
+      "leaf": 3,
+      "date": 1489503383,
+      "date_usec": 984778,
+      "anonymity": 1,
+      "user_id": "XoFvuQNO1G4bZmeiCQGRaAPHjcs",
+      "mail": "184",
+      "content": "ラピスおりゅ？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 54,
+      "vpos": 26095,
+      "leaf": 4,
+      "date": 1489566424,
+      "date_usec": 572591,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ef0xOnM_Ac9zwIm-abTTAIN0_ek",
+      "mail": "184",
+      "content": "この宣伝はなんなのだ！？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 55,
+      "vpos": 1649,
+      "date": 1489617409,
+      "date_usec": 945497,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "毎回思うけど、この企画は素晴らしいと思う。そして面白いｗ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 56,
+      "vpos": 3630,
+      "date": 1489617482,
+      "date_usec": 555735,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "さっき平凡の方見たが、今回の銀レアDはかなりハードル高いよね"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 57,
+      "vpos": 10104,
+      "leaf": 1,
+      "date": 1489617570,
+      "date_usec": 761025,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "弓って結構大事なのかー"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 58,
+      "vpos": 19793,
+      "leaf": 3,
+      "date": 1489617710,
+      "date_usec": 476268,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "BGMｗｗｗ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 59,
+      "vpos": 21495,
+      "leaf": 3,
+      "date": 1489617739,
+      "date_usec": 448528,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "第二関門のラピス様かな？"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 60,
+      "vpos": 22457,
+      "leaf": 3,
+      "date": 1489617772,
+      "date_usec": 808802,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "（中身が）黒ユニットでもきついのかー((( ；ﾟДﾟ)))ｶﾞｸｶﾞｸﾌﾞﾙﾌﾞﾙ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 61,
+      "vpos": 23279,
+      "leaf": 3,
+      "date": 1489617788,
+      "date_usec": 817341,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZoMIhPMN4S_n6aIz3p713SkYR6k",
+      "mail": "184",
+      "content": "ここで崩壊か・・・"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 62,
+      "vpos": 601,
+      "date": 1489652498,
+      "date_usec": 168532,
+      "anonymity": 1,
+      "user_id": "h1VYFa9CcyYtERptRAS-EI655tw",
+      "mail": "184",
+      "content": "今回のきつそうやなぁ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 63,
+      "vpos": 309,
+      "date": 1489740317,
+      "date_usec": 502241,
+      "anonymity": 1,
+      "user_id": "Q2V-Y_XLKVihpcz2sPBpTk7dIlo",
+      "mail": "184",
+      "content": "きたー"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 64,
+      "vpos": 3614,
+      "date": 1489740350,
+      "date_usec": 673614,
+      "anonymity": 1,
+      "user_id": "Q2V-Y_XLKVihpcz2sPBpTk7dIlo",
+      "mail": "184",
+      "content": "どこまでいくかなあ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 65,
+      "vpos": 8207,
+      "leaf": 1,
+      "date": 1489740396,
+      "date_usec": 326041,
+      "anonymity": 1,
+      "user_id": "Q2V-Y_XLKVihpcz2sPBpTk7dIlo",
+      "mail": "184",
+      "content": "ガチ編成でも500いけないよお"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 66,
+      "vpos": 15743,
+      "leaf": 2,
+      "date": 1489740471,
+      "date_usec": 653817,
+      "anonymity": 1,
+      "user_id": "Q2V-Y_XLKVihpcz2sPBpTk7dIlo",
+      "mail": "184",
+      "content": "チグリちゃんつよい！"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 67,
+      "vpos": 23383,
+      "leaf": 3,
+      "date": 1489740548,
+      "date_usec": 39967,
+      "anonymity": 1,
+      "user_id": "Q2V-Y_XLKVihpcz2sPBpTk7dIlo",
+      "mail": "184",
+      "content": "じゅわあ"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 68,
+      "vpos": 24588,
+      "leaf": 4,
+      "date": 1489836509,
+      "date_usec": 464828,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "3_YrHdqBoYr1VTOORHtvLmuHBsQ",
+      "mail": "184",
+      "content": "うぉつ☆"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 69,
+      "vpos": 23397,
+      "leaf": 3,
+      "date": 1490125452,
+      "date_usec": 402174,
+      "anonymity": 1,
+      "user_id": "FCxKa4g6Lipea-Y0sCAa1SS1hIk",
+      "mail": "184",
+      "content": "全部溶けてて草"
+    }
+  },
+  {
+    "chat": {
+      "thread": "1489327132",
+      "no": 70,
+      "vpos": 24243,
+      "leaf": 4,
+      "date": 1491744141,
+      "date_usec": 546053,
+      "premium": 1,
+      "anonymity": 1,
+      "user_id": "ZOtxlv0PsJwBJ-Qy6KApGW2BEDM",
+      "mail": "184",
+      "content": "閉会式もあると参加者もモチベ上がると思うので無理ない程度でもあるといいな"
+    }
+  }
+]

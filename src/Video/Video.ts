@@ -5,7 +5,7 @@ import * as Request from "request";
 import * as RequestPromise from "request-promise";
 import * as http from "http";
 
-import { WatchAPIData } from "./WatchAPIData";
+import { WatchData } from "./WatchAPIData";
 import { DmcSessionUtility } from "./Utility/DmcSessionUtility";
 
 import * as VideoLow from "./VideoLow";
@@ -31,7 +31,7 @@ export class Video {
         this.lowLevel = new VideoLow.Video(this.session);
     }
 
-    public async getWatchData(videoId: string): Promise<WatchAPIData> {
+    public async getWatchData(videoId: string): Promise<WatchData> {
         return (await this.lowLevel.watchAPIData(videoId));
     }
 
@@ -65,7 +65,7 @@ export class Video {
         return this.request(VideoAPI.downloadsmile(videoInfo.id, videoInfo.smileInfo.url));
     }
 
-    public async createDmcSession(watchAPIData: WatchAPIData): Promise<DmcSession> {
+    public async createDmcSession(watchAPIData: WatchData): Promise<DmcSession> {
         if (!watchAPIData.video.dmcInfo) {
             throw new Exception();
         }
@@ -77,9 +77,9 @@ export class Video {
     }
 
     public async downloadFromDmc(videoId: string): Promise<Buffer>;
-    public async downloadFromDmc(watchAPIData: WatchAPIData): Promise<Buffer>;
-    public async downloadFromDmc(param: string | WatchAPIData): Promise<Buffer> {
-        let watchAPIData: WatchAPIData;
+    public async downloadFromDmc(watchAPIData: WatchData): Promise<Buffer>;
+    public async downloadFromDmc(param: string | WatchData): Promise<Buffer> {
+        let watchAPIData: WatchData;
 
         if (typeof param === "string") {
             watchAPIData = (await this.getWatchData(param));
@@ -105,9 +105,9 @@ export class Video {
     }
 
     public async streamFromDmc(videoId: string): Promise<Request.Request>;
-    public async streamFromDmc(watchAPIData: WatchAPIData): Promise<Request.Request>;
-    public async streamFromDmc(param: string | WatchAPIData): Promise<Request.Request> {
-        let watchAPIData: WatchAPIData;
+    public async streamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
+    public async streamFromDmc(param: string | WatchData): Promise<Request.Request> {
+        let watchAPIData: WatchData;
 
         if (typeof param === "string") {
             watchAPIData = (await this.getWatchData(param));
@@ -152,7 +152,7 @@ export class Video {
          return qs.parse(await this.lowLevel.getThreadKey(threadId));
     }
 
-    public async getComment(watchAPIData: WatchAPIData) {
+    public async getComment(watchAPIData: WatchData) {
         let requestBody;
 
         if (watchAPIData.video.isOfficial) {
