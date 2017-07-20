@@ -5,7 +5,7 @@ import * as Request from "request";
 import * as RequestPromise from "request-promise";
 import * as http from "http";
 
-import { WatchData } from "./WatchAPIData";
+import { WatchData } from "../Common/WatchData";
 import { DmcSessionUtility } from "./Utility/DmcSessionUtility";
 
 import * as VideoLow from "./VideoLow";
@@ -18,7 +18,7 @@ import Exception from "../Exception";
 import {DmcSession} from "./DmcSession";
 import * as qs from "querystring";
 
-export * from "./WatchAPIData";
+export * from "../Common";
 
 export class Video {
     private lowLevel: VideoLow.Video;

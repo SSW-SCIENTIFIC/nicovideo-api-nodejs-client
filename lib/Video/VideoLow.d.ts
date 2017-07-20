@@ -1,4 +1,4 @@
-import { WatchData } from "./WatchAPIData";
+import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { DmcSession } from "./DmcSession";
 /**

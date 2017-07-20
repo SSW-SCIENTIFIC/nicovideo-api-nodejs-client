@@ -1,11 +1,11 @@
 /// <reference types="node" />
 /// <reference types="request" />
 import * as Request from "request";
-import { WatchData } from "./WatchAPIData";
+import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { VideoInformation } from "./VideoInformation";
 import { DmcSession } from "./DmcSession";
-export * from "./WatchAPIData";
+export * from "../Common";
 export declare class Video {
     private session;
     private lowLevel;

@@ -4,3 +4,5 @@ export const LOGOUT = "https://account.nicovideo.jp/logout";
 export const GET_THUMB_INFO = "http://ext.nicovideo.jp/api/getthumbinfo/";
 export const GET_FLV = "http://flapi.nicovideo.jp/api/getflv/";
 export const WATCH = "http://www.nicovideo.jp/watch/";
+export const MESSAGE_JSON = "http://nmsg.nicovideo.jp/api.json/";
+export const MESSAGE_XML = "http://nmsg.nicovideo.jp/api/";
