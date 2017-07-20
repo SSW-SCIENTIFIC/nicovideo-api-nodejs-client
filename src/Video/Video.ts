@@ -152,11 +152,11 @@ export class Video {
          return qs.parse(await this.lowLevel.getThreadKey(threadId));
     }
 
-    public async getComment(watchAPIData: WatchData) {
+    public async getComment(watchData: WatchData) {
         let requestBody;
 
-        if (watchAPIData.video.isOfficial) {
-            const keys = await this.getThreadKey(watchAPIData.thread.ids.nicos || watchAPIData.thread.ids.community);
+        if (watchData.video.isOfficial) {
+            const keys = await this.getThreadKey(watchData.thread.ids.nicos || watchData.thread.ids.community);
         } else {
 
         }

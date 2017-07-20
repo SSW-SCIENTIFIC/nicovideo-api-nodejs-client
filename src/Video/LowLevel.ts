@@ -4,12 +4,12 @@ import * as cheerio from "cheerio";
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
 
-import {WatchData} from "../Common/WatchData";
+import { WatchData } from "../Common/WatchData";
 
-import {Session} from "../Session/Session";
-import {Video as VideoAPI} from "../APIEntryPoints";
+import { Session } from "../Session/Session";
+import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
-import {DmcSession} from "./DmcSession";
+import { DmcSession } from "./DmcSession";
 
 type Request = typeof Request;
 type RequestPromise = typeof RequestPromise;

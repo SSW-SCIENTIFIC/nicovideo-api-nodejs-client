@@ -33,5 +33,5 @@ export declare class Video {
         threadkey: string;
         force_184: string;
     }>;
-    getComment(watchAPIData: WatchData): Promise<void>;
+    getComment(watchData: WatchData): Promise<void>;
 }
