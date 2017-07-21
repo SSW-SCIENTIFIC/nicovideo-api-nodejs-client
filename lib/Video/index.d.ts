@@ -1,2 +1,2 @@
 export * from "./Video";
-export * from "./WatchAPIData";
+export * from "../Common/WatchData";

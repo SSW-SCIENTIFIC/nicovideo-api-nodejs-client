@@ -10,6 +10,7 @@ import { Session } from "../Session/Session";
 import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import { DmcSession } from "./DmcSession";
+import {DmcSessionResult} from "./DmcSessionResult";
 
 type Request = typeof Request;
 type RequestPromise = typeof RequestPromise;
@@ -40,17 +41,6 @@ export class Video {
     }
 
     /**
-     * Access to watch API and returns response body.
-     * @param {string} videoId
-     * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
-     * @returns {Promise<string>}
-     */
-    public async watch(videoId: string, isHTML5: boolean = true): Promise<string> {
-        this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1" : "0")), APIUrl.WATCH + videoId);
-        return await this.requestPromise(VideoAPI.watch(videoId));
-    }
-
-    /**
      * Access to getflv API and returns response body.
      * @param videoId
      * @returns {Promise<string>}
@@ -60,13 +50,24 @@ export class Video {
     }
 
     /**
+     * Access to watch API and returns response body.
+     * @param {string} videoId
+     * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
+     * @returns {Promise<string>}
+     */
+    public async getWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
+        this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1" : "0")), APIUrl.WATCH + videoId);
+        return await this.requestPromise(VideoAPI.watch(videoId));
+    }
+
+    /**
      * Returns watch API data.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<WatchData>}
      */
-    public async watchAPIData(videoId: string, isHTML5: boolean = true): Promise<WatchData> {
-        let dom = cheerio.load(await this.watch(videoId, isHTML5).catch((err) => ""));
+    public async getWatchData(videoId: string, isHTML5: boolean = true): Promise<object> {
+        let dom = cheerio.load(await this.getWatchPage(videoId, isHTML5).catch((err) => ""));
         return isHTML5 ?
             JSON.parse(dom("#js-initial-watch-data").attr("data-api-data") || "{}") :
             JSON.parse(dom("#watchAPIDataContainer").text() || "{}");
@@ -76,33 +77,41 @@ export class Video {
      *
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {object} body
-     * @returns {Promise<string>}
+     * @param {DmcSession} session
+     * @returns {Promise<DmcSessionResult>}
      */
-    public async dmcSession(videoId: string, apiUrl: string, body: object): Promise<string> {
-        return await this.requestPromise(VideoAPI.dmcsession(videoId, apiUrl, body));
+    public async createDmcSession(videoId: string, apiUrl: string, session: DmcSession): Promise<DmcSessionResult> {
+        return JSON.parse(
+            await this.requestPromise(
+                VideoAPI.dmcsession(videoId, apiUrl, JSON.stringify({session: session}))
+            )
+        );
     }
 
     /**
      *
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {DmcSession} dmcSession
-     * @returns {Promise<string>}
+     * @param {DmcSessionResult} session
+     * @returns {Promise<DmcSessionResult>}
      */
-    public async dmcHeartbeat(videoId: string, apiUrl: string, dmcSession: DmcSession): Promise<string> {
-        return await this.requestPromise(VideoAPI.dmcheartbeat(videoId, apiUrl, {session: dmcSession}));
+    public async sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult> {
+        return await this.requestPromise(
+            VideoAPI.dmcheartbeat(videoId, apiUrl, session.id, JSON.stringify({session: session}))
+        );
     }
 
     public async getThreadKey(threadId: string): Promise<string> {
         return await this.requestPromise(VideoAPI.getthreadkey(threadId));
     }
 
-    public async getComment(body: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getcomment(body));
-    }
+    public readonly getComment: (body: string) => Promise<string> = this.getCommentJSON;
 
     public async getCommentJSON(body: string): Promise<string> {
         return await this.requestPromise(VideoAPI.getcommentjson(body));
+    }
+
+    public async getCommentXML(body: string): Promise<string> {
+        return await this.requestPromise(VideoAPI.getcommentxml(body));
     }
 }

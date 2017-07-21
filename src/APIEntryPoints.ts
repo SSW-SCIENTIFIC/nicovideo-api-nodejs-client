@@ -99,11 +99,11 @@ export namespace Video {
      * @param {object} body
      * @returns {RequestPromise.Options}
      */
-    export function dmcsession(videoId: string, apiUrl: string, body: object): RequestPromise.Options {
+    export function dmcsession(videoId: string, apiUrl: string, body: string): RequestPromise.Options {
         return {
             uri: apiUrl + "/?_format=json",
             method: "POST",
-            body: JSON.stringify(body),
+            body: body,
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -117,14 +117,15 @@ export namespace Video {
      * Returns request-promise options to keep session for dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {DmcSession} dmcSession
+     * @param {string} dmcSessionId
+     * @param {string} body
      * @returns {RequestPromise.Options}
      */
-    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSession: {session: DmcSession}): RequestPromise.Options {
+    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options {
         return {
-            uri: apiUrl + "/" + dmcSession.session.id + "?_format=json",
+            uri: apiUrl + "/" + dmcSessionId + "?_format=json",
             method: "PUT",
-            body: JSON.stringify(dmcSession),
+            body: JSON.stringify(dmcSessionId),
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -153,18 +154,20 @@ export namespace Video {
         };
     }
 
-    export function getcomment(body: string): Request.Options {
-        return {
-            method: "POST",
-            uri: "http://nmsg.nicovideo.jp/api/",
-            body: body,
-        };
-    }
+    export const getcomment: (body: string) => Request.Options = getcommentjson;
 
     export function getcommentjson(body: string): Request.Options {
         return {
             method: "POST",
-            uri: "http://nmsg.nicovideo.jp/api.json/",
+            uri: APIUrl.COMMENT_JSON,
+            body: body,
+        };
+    }
+
+    export function getcommentxml(body: string): Request.Options {
+        return {
+            method: "POST",
+            uri: APIUrl.COMMENT_XML,
             body: body,
         };
     }
