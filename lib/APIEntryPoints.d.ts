@@ -2,6 +2,8 @@
 /// <reference types="request" />
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
+import { DmcSession } from "./Video/Dmc/DmcSession";
+import { DmcSessionResult } from "./Video/Dmc/DmcSessionResult";
 export declare namespace Session {
     /**
      * Create Request object to login into nicovideo.jp.
@@ -47,19 +49,18 @@ export declare namespace Video {
      * Create Request object to start session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {object} body
+     * @param {DmcSession} session
      * @returns {RequestPromise.Options}
      */
-    function createDmcSessionRequest(videoId: string, apiUrl: string, body: string): RequestPromise.Options;
+    function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): RequestPromise.Options;
     /**
      * Create Request object to keep session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {string} dmcSessionId
-     * @param {string} body
+     * @param {DmcSessionResult} dmcSession
      * @returns {RequestPromise.Options}
      */
-    function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options;
+    function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): RequestPromise.Options;
     /**
      * Create Request object to download video from dmc server.
      * @param {string} videoId

@@ -1,4 +1,4 @@
-interface ThumbInfoSuccess {
+export interface ThumbnailInformationSuccess {
     _declaration?: {
         _attributes: {
             version: string,
@@ -38,7 +38,7 @@ interface ThumbInfoSuccess {
     }
 }
 
-interface ThumbInfoFailure {
+export interface ThumbnailInformationFailure {
     _declaration?: {
         _attributes: {
             version: string,
@@ -54,4 +54,4 @@ interface ThumbInfoFailure {
     };
 }
 
-export type ThumbInfo = ThumbInfoSuccess | ThumbInfoFailure;
+export type ThumbnailInformation = ThumbnailInformationSuccess | ThumbnailInformationFailure;

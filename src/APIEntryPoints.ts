@@ -3,6 +3,7 @@ import * as RequestPromise from "request-promise";
 
 import * as APIUrl from "./APIUrls";
 import { DmcSession } from "./Video/Dmc/DmcSession";
+import {DmcSessionResult} from "./Video/Dmc/DmcSessionResult";
 
 export namespace Session {
     /**
@@ -94,14 +95,14 @@ export namespace Video {
      * Create Request object to start session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {object} body
+     * @param {DmcSession} session
      * @returns {RequestPromise.Options}
      */
-    export function createDmcSessionRequest(videoId: string, apiUrl: string, body: string): RequestPromise.Options {
+    export function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): RequestPromise.Options {
         return {
             uri: apiUrl + "/?_format=json",
             method: "POST",
-            body: body,
+            body: JSON.stringify({session: session}),
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
@@ -115,15 +116,14 @@ export namespace Video {
      * Create Request object to keep session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
-     * @param {string} dmcSessionId
-     * @param {string} body
+     * @param {DmcSessionResult} dmcSession
      * @returns {RequestPromise.Options}
      */
-    export function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options {
+    export function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): RequestPromise.Options {
         return {
-            uri: apiUrl + "/" + dmcSessionId + "?_format=json",
+            uri: apiUrl + "/" + dmcSession.id + "?_format=json",
             method: "PUT",
-            body: JSON.stringify(dmcSessionId),
+            body: JSON.stringify({ session: dmcSession }),
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",

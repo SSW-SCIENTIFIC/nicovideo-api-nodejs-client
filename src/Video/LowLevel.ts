@@ -11,12 +11,14 @@ import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import { DmcSession } from "./Dmc/DmcSession";
 import {DmcSessionResult} from "./Dmc/DmcSessionResult";
+import {ThumbnailInformation} from "./ThumbnailInformation";
+import {FlvInformation} from "./FlvInformation";
 
 type Request = typeof Request;
 type RequestPromise = typeof RequestPromise;
 
 /**
- * Access nicovideo.jp APIs and Returns response directly.
+ * Access nicovideo.jp Level API Directly.
  */
 export class Video {
     private request: Request;
@@ -32,11 +34,11 @@ export class Video {
     }
 
     /**
-     * Access to getthhumbinfo API and returns response body.
+     * Access getthhumbinfo API and get parsed object.
      * @param {string} videoId
      * @returns {Promise<string>}
      */
-    public async getThumbInfo(videoId: string): Promise<string> {
+    public async getThumbInfo(videoId: string): Promise<ThumbnailInformation> {
         return xml2js(
             await this.requestPromise(VideoAPI.createGetThumbInfoRequest(videoId)),
             { compact: true },
@@ -44,16 +46,16 @@ export class Video {
     }
 
     /**
-     * Access to getflv API and returns response body.
+     * Access getflv API and get parsed object.
      * @param videoId
      * @returns {Promise<string>}
      */
-    public async getFLV(videoId: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.createGetFlvRequest(videoId));
+    public async getFlv(videoId: string): Promise<FlvInformation> {
+        return QueryString.parse(await this.requestPromise(VideoAPI.createGetFlvRequest(videoId)));
     }
 
     /**
-     * Access to watch API and returns response body.
+     * Access watch API and get response body.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<string>}
@@ -64,12 +66,12 @@ export class Video {
     }
 
     /**
-     * Returns watch API data.
+     * Get watch API data.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<WatchData>}
      */
-    public async getWatchData(videoId: string, isHTML5: boolean = true): Promise<object> {
+    public async getWatchData(videoId: string, isHTML5: boolean = true): Promise<WatchData> {
         let dom = cheerio.load(await this.getWatchPage(videoId, isHTML5).catch((err) => ""));
         return isHTML5 ?
             JSON.parse(dom("#js-initial-watch-data").attr("data-api-data") || "{}") :
@@ -86,7 +88,7 @@ export class Video {
     public async createDmcSession(videoId: string, apiUrl: string, session: DmcSession): Promise<DmcSessionResult> {
         return JSON.parse(
             await this.requestPromise(
-                VideoAPI.createDmcSessionRequest(videoId, apiUrl, JSON.stringify({session: session}))
+                VideoAPI.createDmcSessionRequest(videoId, apiUrl, session),
             )
         );
     }
@@ -100,7 +102,7 @@ export class Video {
      */
     public async sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult> {
         return await this.requestPromise(
-            VideoAPI.createDmcHeartbeatRequest(videoId, apiUrl, session.id, JSON.stringify({session: session}))
+            VideoAPI.createDmcHeartbeatRequest(videoId, apiUrl, session)
         );
     }
 

@@ -1,4 +1,4 @@
-export interface FLVInfo {
+export interface FlvInformation {
     thread_id: number;
     l: number;
     url: string;

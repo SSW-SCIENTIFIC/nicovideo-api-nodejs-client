@@ -1,8 +1,11 @@
+import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { DmcSession } from "./Dmc/DmcSession";
 import { DmcSessionResult } from "./Dmc/DmcSessionResult";
+import { ThumbnailInformation } from "./ThumbnailInformation";
+import { FlvInformation } from "./FlvInformation";
 /**
- * Access nicovideo.jp APIs and Returns response directly.
+ * Access nicovideo.jp Level API Directly.
  */
 export declare class Video {
     private session;
@@ -14,31 +17,31 @@ export declare class Video {
      */
     constructor(session: Session);
     /**
-     * Access to getthhumbinfo API and returns response body.
+     * Access getthhumbinfo API and get parsed object.
      * @param {string} videoId
      * @returns {Promise<string>}
      */
-    getThumbInfo(videoId: string): Promise<string>;
+    getThumbInfo(videoId: string): Promise<ThumbnailInformation>;
     /**
-     * Access to getflv API and returns response body.
+     * Access getflv API and get parsed object.
      * @param videoId
      * @returns {Promise<string>}
      */
-    getFLV(videoId: string): Promise<string>;
+    getFlv(videoId: string): Promise<FlvInformation>;
     /**
-     * Access to watch API and returns response body.
+     * Access watch API and get response body.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<string>}
      */
     getWatchPage(videoId: string, isHTML5?: boolean): Promise<string>;
     /**
-     * Returns watch API data.
+     * Get watch API data.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<WatchData>}
      */
-    getWatchData(videoId: string, isHTML5?: boolean): Promise<object>;
+    getWatchData(videoId: string, isHTML5?: boolean): Promise<WatchData>;
     /**
      *
      * @param {string} videoId
