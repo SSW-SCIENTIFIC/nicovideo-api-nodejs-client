@@ -37,7 +37,10 @@ export class Video {
      * @returns {Promise<string>}
      */
     public async getThumbInfo(videoId: string): Promise<string> {
-        return xml2js(await this.requestPromise(VideoAPI.createGetThumbInfoRequest(videoId)));
+        return xml2js(
+            await this.requestPromise(VideoAPI.createGetThumbInfoRequest(videoId)),
+            { compact: true },
+        );
     }
 
     /**
