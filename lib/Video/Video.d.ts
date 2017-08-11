@@ -3,7 +3,7 @@
 import * as Request from "request";
 import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
-import { DmcSessionResult } from "./DmcSessionResult";
+import { DmcSessionResult } from "./Dmc/DmcSessionResult";
 export * from "../Common";
 export declare class Video {
     private session;

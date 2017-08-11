@@ -2,18 +2,16 @@ import * as Request from "request";
 import * as RequestPromise from "request-promise";
 
 import * as APIUrl from "./APIUrls";
-import { DmcSession } from "./Video/DmcSession";
-
-const ORIGIN = "http://www.nicovideo.jp";
+import { DmcSession } from "./Video/Dmc/DmcSession";
 
 export namespace Session {
     /**
-     * Returns request-promise options to login to nicovideo.jp.
+     * Create Request object to login into nicovideo.jp.
      * @param {string} email An E-mail used to login.
      * @param {string} password A password used to login.
      * @returns {RequestPromise.Options}
      */
-    export function login(email: string, password: string): RequestPromise.Options {
+    export function createLoginRequest(email: string, password: string): RequestPromise.Options {
         return {
             method: "POST",
             uri: APIUrl.LOGIN,
@@ -26,11 +24,11 @@ export namespace Session {
     }
 
     /**
-     * Returns request-promise options to logout from nicovideo.jp.
+     * Create Request object to logout from nicovideo.jp.
      * @returns {RequestPromise.Options}
      * @todo check is collect.
      */
-    export function logout(): RequestPromise.Options {
+    export function createLogoutRequest(): RequestPromise.Options {
         return {
             method: "GET",
             uri: APIUrl.LOGOUT,
@@ -40,11 +38,11 @@ export namespace Session {
 
 export namespace Video {
     /**
-     * Returns request-promise options to access to getthumbinfo API.
+     * Create Reqeust object to access getthumbinfo API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    export function getthumbinfo(videoId: string): RequestPromise.Options {
+    export function createGetThumbInfoRequest(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
             uri: APIUrl.GET_THUMB_INFO + videoId,
@@ -52,11 +50,11 @@ export namespace Video {
     }
 
     /**
-     * Returns request-promise options to access to watch API.
+     * Create Request object to access watch API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    export function watch(videoId: string): RequestPromise.Options {
+    export function createWatchRequest(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
             uri: APIUrl.WATCH + videoId,
@@ -64,11 +62,11 @@ export namespace Video {
     }
 
     /**
-     * Returns request-promise options to access to getflv API.
+     * Create Request object to access getflv API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    export function getflv(videoId: string): RequestPromise.Options {
+    export function createGetFlvRequest(videoId: string): RequestPromise.Options {
         return {
             method: "GET",
             uri: APIUrl.GET_FLV + videoId + (videoId.match(/^nm/) ? "?as3=1" : ""),
@@ -76,15 +74,15 @@ export namespace Video {
     }
 
     /**
-     * Returns request options to download video from smile server.
+     * Create Request object to download video from smile server.
      * @param {string} videoId
-     * @param {string} videoUri
+     * @param {string} videoUrl
      * @returns {Request.Options}
      */
-    export function downloadsmile(videoId: string, videoUri: string): Request.Options {
+    export function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Request.Options {
         return {
             method: "GET",
-            uri: videoUri,
+            uri: videoUrl,
             encoding: null,
             headers: {
                 "Referer": APIUrl.WATCH + videoId,
@@ -93,13 +91,13 @@ export namespace Video {
     }
 
     /**
-     * Returns request-promise options to start session for dmc server.
+     * Create Request object to start session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {object} body
      * @returns {RequestPromise.Options}
      */
-    export function dmcsession(videoId: string, apiUrl: string, body: string): RequestPromise.Options {
+    export function createDmcSessionRequest(videoId: string, apiUrl: string, body: string): RequestPromise.Options {
         return {
             uri: apiUrl + "/?_format=json",
             method: "POST",
@@ -114,14 +112,14 @@ export namespace Video {
     }
 
     /**
-     * Returns request-promise options to keep session for dmc server.
+     * Create Request object to keep session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {string} dmcSessionId
      * @param {string} body
      * @returns {RequestPromise.Options}
      */
-    export function dmcheartbeat(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options {
+    export function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options {
         return {
             uri: apiUrl + "/" + dmcSessionId + "?_format=json",
             method: "PUT",
@@ -136,12 +134,12 @@ export namespace Video {
     }
 
     /**
-     * Returns request options to download video from dmc server.
+     * Create Request object to download video from dmc server.
      * @param {string} videoId
      * @param {string} videoUrl
      * @returns {Request.Options}
      */
-    export function downloaddmc(videoId: string, videoUrl: string): Request.Options {
+    export function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Request.Options {
         return {
             method: "GET",
             uri: videoUrl,
@@ -154,9 +152,9 @@ export namespace Video {
         };
     }
 
-    export const getcomment: (body: string) => Request.Options = getcommentjson;
+    export const createGetCommentRequest: (body: string) => Request.Options = createGetCommentByJsonRequest;
 
-    export function getcommentjson(body: string): Request.Options {
+    export function createGetCommentByJsonRequest(body: string): Request.Options {
         return {
             method: "POST",
             uri: APIUrl.COMMENT_JSON,
@@ -164,7 +162,7 @@ export namespace Video {
         };
     }
 
-    export function getcommentxml(body: string): Request.Options {
+    export function createGetCommentByXMLRequest(body: string): Request.Options {
         return {
             method: "POST",
             uri: APIUrl.COMMENT_XML,
@@ -172,10 +170,10 @@ export namespace Video {
         };
     }
 
-    export function getthreadkey(threadId: string): Request.Options {
+    export function createGetThreadKeyRequest(threadId: string): Request.Options {
         return {
             method: "GET",
-            uri: "http://flapi.nicovideo.jp/api/getthreadkey?thread=" + threadId,
+            uri: APIUrl.GET_THREAD_KEY + "?thread=" + threadId,
         };
     }
 }

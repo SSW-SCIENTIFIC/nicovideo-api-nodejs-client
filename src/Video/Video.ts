@@ -15,9 +15,9 @@ import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import {VideoInformation} from "./VideoInformation";
 import Exception from "../Exception";
-import {DmcSession} from "./DmcSession";
+import {DmcSession} from "./Dmc/DmcSession";
 import * as qs from "querystring";
-import {DmcSessionResult} from "./DmcSessionResult";
+import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 
 export * from "../Common";
 

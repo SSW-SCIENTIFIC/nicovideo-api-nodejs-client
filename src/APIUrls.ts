@@ -6,3 +6,4 @@ export const GET_FLV = "http://flapi.nicovideo.jp/api/getflv/";
 export const WATCH = "http://www.nicovideo.jp/watch/";
 export const COMMENT_JSON = "http://nmsg.nicovideo.jp/api.json/";
 export const COMMENT_XML = "http://nmsg.nicovideo.jp/api/";
+export const GET_THREAD_KEY = "http://flapi.nicovideo.jp/api/getthreadkey";

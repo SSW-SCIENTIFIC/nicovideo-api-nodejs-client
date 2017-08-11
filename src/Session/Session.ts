@@ -37,7 +37,7 @@ export class Session {
      * @returns {Promise<void>}
      */
     public async login(email: string, password: string): Promise<void> {
-        return this.request(SessionAPI.login(email, password)).then(() => {
+        return this.request(SessionAPI.createLoginRequest(email, password)).then(() => {
             let count = this.cookieJar.getCookies(APIUrl.LOGIN)
                 .filter((cookie: Cookie, index: number) => cookie.key === "user_session").length;
 
@@ -53,7 +53,7 @@ export class Session {
     }
 
     public async logout(): Promise<void> {
-        return this.request(SessionAPI.logout());
+        return this.request(SessionAPI.createLogoutRequest());
     }
 
     /**

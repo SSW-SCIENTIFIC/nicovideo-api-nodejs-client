@@ -4,71 +4,71 @@ import * as Request from "request";
 import * as RequestPromise from "request-promise";
 export declare namespace Session {
     /**
-     * Returns request-promise options to login to nicovideo.jp.
+     * Create Request object to login into nicovideo.jp.
      * @param {string} email An E-mail used to login.
      * @param {string} password A password used to login.
      * @returns {RequestPromise.Options}
      */
-    function login(email: string, password: string): RequestPromise.Options;
+    function createLoginRequest(email: string, password: string): RequestPromise.Options;
     /**
-     * Returns request-promise options to logout from nicovideo.jp.
+     * Create Request object to logout from nicovideo.jp.
      * @returns {RequestPromise.Options}
      * @todo check is collect.
      */
-    function logout(): RequestPromise.Options;
+    function createLogoutRequest(): RequestPromise.Options;
 }
 export declare namespace Video {
     /**
-     * Returns request-promise options to access to getthumbinfo API.
+     * Create Reqeust object to access getthumbinfo API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    function getthumbinfo(videoId: string): RequestPromise.Options;
+    function createGetThumbInfoRequest(videoId: string): RequestPromise.Options;
     /**
-     * Returns request-promise options to access to watch API.
+     * Create Request object to access watch API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    function watch(videoId: string): RequestPromise.Options;
+    function createWatchRequest(videoId: string): RequestPromise.Options;
     /**
-     * Returns request-promise options to access to getflv API.
+     * Create Request object to access getflv API.
      * @param {string} videoId
      * @returns {RequestPromise.Options}
      */
-    function getflv(videoId: string): RequestPromise.Options;
+    function createGetFlvRequest(videoId: string): RequestPromise.Options;
     /**
-     * Returns request options to download video from smile server.
+     * Create Request object to download video from smile server.
      * @param {string} videoId
-     * @param {string} videoUri
+     * @param {string} videoUrl
      * @returns {Request.Options}
      */
-    function downloadsmile(videoId: string, videoUri: string): Request.Options;
+    function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Request.Options;
     /**
-     * Returns request-promise options to start session for dmc server.
+     * Create Request object to start session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {object} body
      * @returns {RequestPromise.Options}
      */
-    function dmcsession(videoId: string, apiUrl: string, body: string): RequestPromise.Options;
+    function createDmcSessionRequest(videoId: string, apiUrl: string, body: string): RequestPromise.Options;
     /**
-     * Returns request-promise options to keep session for dmc server.
+     * Create Request object to keep session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {string} dmcSessionId
      * @param {string} body
      * @returns {RequestPromise.Options}
      */
-    function dmcheartbeat(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options;
+    function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSessionId: string, body: string): RequestPromise.Options;
     /**
-     * Returns request options to download video from dmc server.
+     * Create Request object to download video from dmc server.
      * @param {string} videoId
      * @param {string} videoUrl
      * @returns {Request.Options}
      */
-    function downloaddmc(videoId: string, videoUrl: string): Request.Options;
-    const getcomment: (body: string) => Request.Options;
-    function getcommentjson(body: string): Request.Options;
-    function getcommentxml(body: string): Request.Options;
-    function getthreadkey(threadId: string): Request.Options;
+    function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Request.Options;
+    const createGetCommentRequest: (body: string) => Request.Options;
+    function createGetCommentByJsonRequest(body: string): Request.Options;
+    function createGetCommentByXMLRequest(body: string): Request.Options;
+    function createGetThreadKeyRequest(threadId: string): Request.Options;
 }

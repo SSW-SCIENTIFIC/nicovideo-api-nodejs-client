@@ -1,6 +1,6 @@
 import { Session } from "../Session/Session";
-import { DmcSession } from "./DmcSession";
-import { DmcSessionResult } from "./DmcSessionResult";
+import { DmcSession } from "./Dmc/DmcSession";
+import { DmcSessionResult } from "./Dmc/DmcSessionResult";
 /**
  * Access nicovideo.jp APIs and Returns response directly.
  */
@@ -57,6 +57,6 @@ export declare class Video {
     sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult>;
     getThreadKey(threadId: string): Promise<string>;
     readonly getComment: (body: string) => Promise<string>;
-    getCommentJSON(body: string): Promise<string>;
-    getCommentXML(body: string): Promise<string>;
+    getCommentByJson(body: string): Promise<string>;
+    getCommentByXML(body: string): Promise<string>;
 }

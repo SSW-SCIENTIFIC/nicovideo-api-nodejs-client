@@ -9,8 +9,8 @@ import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { Video as VideoAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
-import { DmcSession } from "./DmcSession";
-import {DmcSessionResult} from "./DmcSessionResult";
+import { DmcSession } from "./Dmc/DmcSession";
+import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 
 type Request = typeof Request;
 type RequestPromise = typeof RequestPromise;
@@ -37,7 +37,7 @@ export class Video {
      * @returns {Promise<string>}
      */
     public async getThumbInfo(videoId: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getthumbinfo(videoId));
+        return xml2js(await this.requestPromise(VideoAPI.createGetThumbInfoRequest(videoId)));
     }
 
     /**
@@ -46,7 +46,7 @@ export class Video {
      * @returns {Promise<string>}
      */
     public async getFLV(videoId: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getflv(videoId));
+        return await this.requestPromise(VideoAPI.createGetFlvRequest(videoId));
     }
 
     /**
@@ -57,7 +57,7 @@ export class Video {
      */
     public async getWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
         this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1" : "0")), APIUrl.WATCH + videoId);
-        return await this.requestPromise(VideoAPI.watch(videoId));
+        return await this.requestPromise(VideoAPI.createWatchRequest(videoId));
     }
 
     /**
@@ -83,7 +83,7 @@ export class Video {
     public async createDmcSession(videoId: string, apiUrl: string, session: DmcSession): Promise<DmcSessionResult> {
         return JSON.parse(
             await this.requestPromise(
-                VideoAPI.dmcsession(videoId, apiUrl, JSON.stringify({session: session}))
+                VideoAPI.createDmcSessionRequest(videoId, apiUrl, JSON.stringify({session: session}))
             )
         );
     }
@@ -97,21 +97,21 @@ export class Video {
      */
     public async sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult> {
         return await this.requestPromise(
-            VideoAPI.dmcheartbeat(videoId, apiUrl, session.id, JSON.stringify({session: session}))
+            VideoAPI.createDmcHeartbeatRequest(videoId, apiUrl, session.id, JSON.stringify({session: session}))
         );
     }
 
     public async getThreadKey(threadId: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getthreadkey(threadId));
+        return await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId));
     }
 
-    public readonly getComment: (body: string) => Promise<string> = this.getCommentJSON;
+    public readonly getComment: (body: string) => Promise<string> = this.getCommentByJson;
 
-    public async getCommentJSON(body: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getcommentjson(body));
+    public async getCommentByJson(body: string): Promise<string> {
+        return await this.requestPromise(VideoAPI.createGetCommentByJsonRequest(body));
     }
 
-    public async getCommentXML(body: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.getcommentxml(body));
+    public async getCommentByXML(body: string): Promise<string> {
+        return await this.requestPromise(VideoAPI.createGetCommentByXMLRequest(body));
     }
 }

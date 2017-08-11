@@ -1,4 +1,4 @@
-import { DmcInformation } from "./DmcInformation";
+import { DmcInformation } from "./Dmc/DmcInformation";
 import { SmileInformation } from "./SmileInformation";
 export interface VideoInformation {
     id: string;
