@@ -58,8 +58,9 @@ export declare class Video {
      * @returns {Promise<DmcSessionResult>}
      */
     sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult>;
-    getThreadKey(threadId: string): Promise<string>;
+    getThreadKey(threadId: number): Promise<string>;
     readonly getComment: (body: string) => Promise<string>;
     getCommentByJson(body: string): Promise<string>;
     getCommentByXML(body: string): Promise<string>;
+    getWaybackKey(threadId: number): Promise<string>;
 }

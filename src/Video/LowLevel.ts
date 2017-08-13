@@ -14,15 +14,12 @@ import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 import {ThumbnailInformation} from "./ThumbnailInformation";
 import {FlvInformation} from "./FlvInformation";
 
-type Request = typeof Request;
-type RequestPromise = typeof RequestPromise;
-
 /**
  * Access nicovideo.jp Level API Directly.
  */
 export class Video {
-    private request: Request;
-    private requestPromise: RequestPromise;
+    private request: typeof Request;
+    private requestPromise: typeof RequestPromise;
 
     /**
      * @constructor
@@ -90,7 +87,7 @@ export class Video {
             await this.requestPromise(
                 VideoAPI.createDmcSessionRequest(videoId, apiUrl, session),
             )
-        );
+        ).data.session;
     }
 
     /**
@@ -106,8 +103,8 @@ export class Video {
         );
     }
 
-    public async getThreadKey(threadId: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId));
+    public async getThreadKey(threadId: number): Promise<string> {
+        return QueryString.parse(await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId))).thread_key;
     }
 
     public readonly getComment: (body: string) => Promise<string> = this.getCommentByJson;
@@ -118,5 +115,9 @@ export class Video {
 
     public async getCommentByXML(body: string): Promise<string> {
         return await this.requestPromise(VideoAPI.createGetCommentByXMLRequest(body));
+    }
+
+    public async getWaybackKey(threadId: number): Promise<string> {
+        return QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
     }
 }

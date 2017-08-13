@@ -1,6 +1,3 @@
-import * as QueryString from "querystring";
-import { xml2js } from "xml-js";
-import * as cheerio from "cheerio";
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
 import * as http from "http";
@@ -42,7 +39,7 @@ export class Video {
      * @returns {Promise<WatchData>}
      */
     public async getWatchData(videoId: string): Promise<WatchData> {
-        return (await this.lowLevel.getWatchData(videoId) as WatchData);
+        return await this.lowLevel.getWatchData(videoId);
     }
 
     /**
@@ -50,16 +47,16 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<Buffer>}
      */
-    public async downloadFromSmile(videoId: string): Promise<Buffer>;
+    public async getVideoFromSmile(videoId: string): Promise<Buffer>;
 
     /**
      *
      * @param {WatchData} watchData
      * @returns {Promise<Buffer>}
      */
-    public async downloadFromSmile(watchData: WatchData): Promise<Buffer>;
+    public async getVideoFromSmile(watchData: WatchData): Promise<Buffer>;
 
-    public async downloadFromSmile(param: string | WatchData): Promise<Buffer> {
+    public async getVideoFromSmile(param: string | WatchData): Promise<Buffer> {
         let videoInfo: VideoInformation;
 
         if (typeof param == "string") {
@@ -69,7 +66,7 @@ export class Video {
             await this.lowLevel.getWatchPage(videoInfo.id);
         }
 
-        return await this.requestPromise(VideoAPI.downloadsmile(videoInfo.id, videoInfo.smileInfo.url));
+        return await this.requestPromise(VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url));
     }
 
     /**
@@ -77,16 +74,16 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    public async streamFromSmile(videoId: string): Promise<Request.Request>;
+    public async getVideoStreamFromSmile(videoId: string): Promise<Request.Request>;
 
     /**
      *
-     * @param {watchData} WatchData
+     * @param {WatchData} watchData
      * @returns {Promise<request.Request>}
      */
-    public async streamFromSmile(watchData: WatchData): Promise<Request.Request>;
+    public async getVideoStreamFromSmile(watchData: WatchData): Promise<Request.Request>;
 
-    public async streamFromSmile(param: string | WatchData): Promise<Request.Request> {
+    public async getVideoStreamFromSmile(param: string | WatchData): Promise<Request.Request> {
         let videoInfo: VideoInformation;
 
         if (typeof param === "string") {
@@ -96,7 +93,7 @@ export class Video {
             await this.lowLevel.getWatchPage(videoInfo.id);
         }
 
-        return this.request(VideoAPI.downloadsmile(videoInfo.id, videoInfo.smileInfo.url));
+        return this.request(VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url));
     }
 
     /**
@@ -108,11 +105,12 @@ export class Video {
         if (!watchAPIData.video.dmcInfo) {
             throw new Exception();
         }
-        return JSON.parse(await this.lowLevel.createDmcSession(
+
+        return await this.lowLevel.createDmcSession(
             watchAPIData.video.id,
             watchAPIData.video.dmcInfo.session_api.urls[0].url,
-            JSON.stringify({session: DmcSessionUtility.createSessionFromWatchAPIData(watchAPIData)}),
-        )).data.session;
+            DmcSessionUtility.createSessionFromWatchAPIData(watchAPIData),
+        );
     }
 
     /**
@@ -120,16 +118,16 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<Buffer>}
      */
-    public async downloadFromDmc(videoId: string): Promise<Buffer>;
+    public async getVideoFromDmc(videoId: string): Promise<Buffer>;
 
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<Buffer>}
      */
-    public async downloadFromDmc(watchAPIData: WatchData): Promise<Buffer>;
+    public async getVideoFromDmc(watchAPIData: WatchData): Promise<Buffer>;
 
-    public async downloadFromDmc(param: string | WatchData): Promise<Buffer> {
+    public async getVideoFromDmc(param: string | WatchData): Promise<Buffer> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -148,10 +146,10 @@ export class Video {
 
         const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
-            return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session.id, JSON.stringify({session: session}))
+            return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session);
         }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return this.requestPromise(VideoAPI.downloaddmc(id, session.content_uri))
+        return this.requestPromise(VideoAPI.createDownloadFromDmcRequest(id, session.content_uri))
             .finally(() => clearInterval(intervalId));
     }
 
@@ -160,15 +158,15 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    public async streamFromDmc(videoId: string): Promise<Request.Request>;
+    public async getVideoStreamFromDmc(videoId: string): Promise<Request.Request>;
 
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<request.Request>}
      */
-    public async streamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
-    public async streamFromDmc(param: string | WatchData): Promise<Request.Request> {
+    public async getVideoStreamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
+    public async getVideoStreamFromDmc(param: string | WatchData): Promise<Request.Request> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -187,11 +185,11 @@ export class Video {
 
         const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
-            return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session.id, JSON.stringify({session: session}))
+            return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session);
         }, session.keep_method.heartbeat.lifetime * 0.9);
 
         return this.request(
-            VideoAPI.downloaddmc(watchAPIData.video.id, session.content_uri),
+            VideoAPI.createDownloadFromDmcRequest(watchAPIData.video.id, session.content_uri),
             () => clearInterval(intervalId),
         );
     }
@@ -202,19 +200,37 @@ export class Video {
      * @returns {Promise<void>}
      * @todo implement
      */
-    public async downloadVideo(videoId: string) {
-        const request = (await this.streamFromDmc(videoId));
+    public async getVideo(videoId: string) {
+        const request = (await this.getVideoStreamFromDmc(videoId));
         request.on("response", (response: http.IncomingMessage) : void => {
             request.abort();
 
         });
     }
 
+    public async getVideoStream() {
+
+    }
+
     public async getComment(watchData: WatchData) {
         if (watchData.video.isOfficial) {
-            const keys = await this.getThreadKey(watchData.thread.ids.nicos || watchData.thread.ids.community);
+            const keys = await this.getThreadKey(watchData);
         } else {
 
         }
+    }
+
+    public async getThreadKey(threadId: number): Promise<string>;
+    public async getThreadKey(watchData: WatchData): Promise<string>;
+    public async getThreadKey(param: number | WatchData): Promise<string> {
+        let threadId: number;
+
+        if (typeof param === "number") {
+            threadId = param;
+        } else {
+            threadId = param.thread.ids.nicos || param.thread.ids.community || param.thread.ids.default;
+        }
+
+        return this.lowLevel.getThreadKey(threadId);
     }
 }

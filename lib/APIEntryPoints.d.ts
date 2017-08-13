@@ -71,5 +71,6 @@ export declare namespace Video {
     const createGetCommentRequest: (body: string) => Request.Options;
     function createGetCommentByJsonRequest(body: string): Request.Options;
     function createGetCommentByXMLRequest(body: string): Request.Options;
-    function createGetThreadKeyRequest(threadId: string): Request.Options;
+    function createGetThreadKeyRequest(threadId: number): Request.Options;
+    function createGetWaybackKeyRequest(threadId: number): Request.Options;
 }

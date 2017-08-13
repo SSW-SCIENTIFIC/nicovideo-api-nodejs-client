@@ -26,25 +26,25 @@ export declare class Video {
      * @param {string} videoId
      * @returns {Promise<Buffer>}
      */
-    downloadFromSmile(videoId: string): Promise<Buffer>;
+    getVideoFromSmile(videoId: string): Promise<Buffer>;
     /**
      *
      * @param {WatchData} watchData
      * @returns {Promise<Buffer>}
      */
-    downloadFromSmile(watchData: WatchData): Promise<Buffer>;
+    getVideoFromSmile(watchData: WatchData): Promise<Buffer>;
     /**
      *
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    streamFromSmile(videoId: string): Promise<Request.Request>;
+    getVideoStreamFromSmile(videoId: string): Promise<Request.Request>;
     /**
      *
-     * @param {watchData} WatchData
+     * @param {WatchData} watchData
      * @returns {Promise<request.Request>}
      */
-    streamFromSmile(watchData: WatchData): Promise<Request.Request>;
+    getVideoStreamFromSmile(watchData: WatchData): Promise<Request.Request>;
     /**
      * Create Session for DMC Server.
      * @param {WatchData} watchAPIData
@@ -56,31 +56,34 @@ export declare class Video {
      * @param {string} videoId
      * @returns {Promise<Buffer>}
      */
-    downloadFromDmc(videoId: string): Promise<Buffer>;
+    getVideoFromDmc(videoId: string): Promise<Buffer>;
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<Buffer>}
      */
-    downloadFromDmc(watchAPIData: WatchData): Promise<Buffer>;
+    getVideoFromDmc(watchAPIData: WatchData): Promise<Buffer>;
     /**
      *
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    streamFromDmc(videoId: string): Promise<Request.Request>;
+    getVideoStreamFromDmc(videoId: string): Promise<Request.Request>;
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<request.Request>}
      */
-    streamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
+    getVideoStreamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
     /**
      *
      * @param videoId
      * @returns {Promise<void>}
      * @todo implement
      */
-    downloadVideo(videoId: string): Promise<void>;
+    getVideo(videoId: string): Promise<void>;
+    getVideoStream(): Promise<void>;
     getComment(watchData: WatchData): Promise<void>;
+    getThreadKey(threadId: number): Promise<string>;
+    getThreadKey(watchData: WatchData): Promise<string>;
 }

@@ -170,10 +170,17 @@ export namespace Video {
         };
     }
 
-    export function createGetThreadKeyRequest(threadId: string): Request.Options {
+    export function createGetThreadKeyRequest(threadId: number): Request.Options {
         return {
             method: "GET",
             uri: APIUrl.GET_THREAD_KEY + "?thread=" + threadId,
+        };
+    }
+
+    export function createGetWaybackKeyRequest(threadId: number): Request.Options {
+        return {
+            method: "GET",
+            uri: "http://flapi.nicovideo.jp/api/getwaybackkey?thread=" + threadId,
         };
     }
 }

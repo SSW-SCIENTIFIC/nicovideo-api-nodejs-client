@@ -29,8 +29,8 @@ export interface OfficialCommentThreadLeavesRequest {
     language: Language;
     user_id: string;
     content: string;
-    scores: string;
-    nicoru: string;
+    scores: number;
+    nicoru: number;
     userkey: string;
 }
 export interface GeneralCommentThreadRequest {
