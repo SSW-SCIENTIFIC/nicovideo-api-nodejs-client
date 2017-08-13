@@ -104,8 +104,9 @@ export class Video {
         );
     }
 
-    public async getThreadKey(threadId: number): Promise<string> {
-        return QueryString.parse(await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId))).thread_key;
+    public async getThreadKey(threadId: number): Promise<ThreadKey> {
+        const result = QueryString.parse(await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId)));
+        return { key: result.thread_key, force_184: result.force_184 == 1 };
     }
 
     public readonly getComment: (body: string) => Promise<string> = this.getCommentByJson;
@@ -118,8 +119,7 @@ export class Video {
         return await this.requestPromise(VideoAPI.createGetCommentByXMLRequest(body));
     }
 
-    public async getWaybackKey(threadId: number): Promise<ThreadKey> {
-        const result = QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
-        return { key: result.thread_key, force_184: result.force_184 == 1 };
+    public async getWaybackKey(threadId: number): Promise<string> {
+        return QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
     }
 }
