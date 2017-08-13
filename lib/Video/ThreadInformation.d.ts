@@ -5,8 +5,8 @@ export interface ThreadInformation {
     serverUrl: string;
     subServerUrl: string;
     ids: {
-        default: string;
-        nicos?: any;
-        community?: string;
+        default: number;
+        nicos?: number;
+        community?: number;
     };
 }
