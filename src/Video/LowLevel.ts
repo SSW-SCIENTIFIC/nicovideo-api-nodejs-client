@@ -13,6 +13,7 @@ import { DmcSession } from "./Dmc/DmcSession";
 import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 import {ThumbnailInformation} from "./ThumbnailInformation";
 import {FlvInformation} from "./FlvInformation";
+import {ThreadKey} from "./ThreadKey";
 
 /**
  * Access nicovideo.jp Level API Directly.
@@ -117,7 +118,8 @@ export class Video {
         return await this.requestPromise(VideoAPI.createGetCommentByXMLRequest(body));
     }
 
-    public async getWaybackKey(threadId: number): Promise<string> {
-        return QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
+    public async getWaybackKey(threadId: number): Promise<ThreadKey> {
+        const result = QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
+        return { key: result.thread_key, force_184: result.force_184 == 1 };
     }
 }

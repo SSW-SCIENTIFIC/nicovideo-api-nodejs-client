@@ -4,6 +4,7 @@ import { DmcSession } from "./Dmc/DmcSession";
 import { DmcSessionResult } from "./Dmc/DmcSessionResult";
 import { ThumbnailInformation } from "./ThumbnailInformation";
 import { FlvInformation } from "./FlvInformation";
+import { ThreadKey } from "./ThreadKey";
 /**
  * Access nicovideo.jp Level API Directly.
  */
@@ -62,5 +63,5 @@ export declare class Video {
     readonly getComment: (body: string) => Promise<string>;
     getCommentByJson(body: string): Promise<string>;
     getCommentByXML(body: string): Promise<string>;
-    getWaybackKey(threadId: number): Promise<string>;
+    getWaybackKey(threadId: number): Promise<ThreadKey>;
 }
