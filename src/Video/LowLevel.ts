@@ -62,10 +62,13 @@ export class Video {
         const options: AxiosRequestConfig = VideoAPI.createWatchRequest(videoId);
 
         options.headers = options.headers || {};
-        options.headers["Set-Cookie"] = [
+        const cookies = ([options.headers.Cookie] || []);
+        cookies.push(
             "watch_html5=" + (isHTML5 ? 1 : 0),
             "watch_flash=" + (isHTML5 ? 0 : 1),
-        ].join("; ");
+        );
+
+        options.headers.Cookie = cookies.join("; ");
 
         return (await this.session.client.request(VideoAPI.createWatchRequest(videoId))).data;
     }
