@@ -31,7 +31,7 @@ export class Session {
      * @returns {Promise<void>}
      */
     public async login(email: string, password: string): Promise<void> {
-        this.client.request(SessionAPI.createLoginRequest(email, password));
+        await this.client.request(SessionAPI.createLoginRequest(email, password));
     }
 
     /**
@@ -39,7 +39,7 @@ export class Session {
      * @returns {Promise<void>}
      */
     public async logout(): Promise<void> {
-        this.client.request(SessionAPI.createLogoutRequest());
+        await this.client.request(SessionAPI.createLogoutRequest());
     }
 
     /**
