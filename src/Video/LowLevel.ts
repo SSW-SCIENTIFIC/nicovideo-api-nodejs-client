@@ -60,6 +60,8 @@ export class Video {
      */
     public async getWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
         const options: AxiosRequestConfig = VideoAPI.createWatchRequest(videoId);
+        
+        options.headers = options.headers || {};
         options.headers["Set-Cookie"] = "watch_html5=" + (isHTML5 ? "1" : "0");
 
         return (await this.session.client.request(VideoAPI.createWatchRequest(videoId))).data;
