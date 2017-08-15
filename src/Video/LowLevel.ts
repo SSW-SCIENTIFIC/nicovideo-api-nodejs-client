@@ -70,7 +70,7 @@ export class Video {
 
         options.headers.Cookie = cookies.join("; ");
 
-        return (await this.session.client.request(VideoAPI.createWatchRequest(videoId))).data;
+        return (await this.session.client.request(options)).data;
     }
 
     /**
