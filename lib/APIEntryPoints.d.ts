@@ -1,76 +1,75 @@
-/// <reference types="request-promise" />
-/// <reference types="request" />
-import * as Request from "request";
-import * as RequestPromise from "request-promise";
+import * as Axios from "axios";
 import { DmcSession } from "./Video/Dmc/DmcSession";
 import { DmcSessionResult } from "./Video/Dmc/DmcSessionResult";
+import { CommentRequest } from "./Video/CommentRequest";
 export declare namespace Session {
     /**
      * Create Request object to login into nicovideo.jp.
      * @param {string} email An E-mail used to login.
      * @param {string} password A password used to login.
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createLoginRequest(email: string, password: string): RequestPromise.Options;
+    function createLoginRequest(email: string, password: string): Axios.AxiosRequestConfig;
     /**
      * Create Request object to logout from nicovideo.jp.
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      * @todo check is collect.
      */
-    function createLogoutRequest(): RequestPromise.Options;
+    function createLogoutRequest(): Axios.AxiosRequestConfig;
+    function createCheckActiveRequest(): Axios.AxiosRequestConfig;
 }
 export declare namespace Video {
     /**
      * Create Reqeust object to access getthumbinfo API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createGetThumbInfoRequest(videoId: string): RequestPromise.Options;
+    function createGetThumbInfoRequest(videoId: string): Axios.AxiosRequestConfig;
     /**
      * Create Request object to access watch API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createWatchRequest(videoId: string): RequestPromise.Options;
+    function createWatchRequest(videoId: string): Axios.AxiosRequestConfig;
     /**
      * Create Request object to access getflv API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createGetFlvRequest(videoId: string): RequestPromise.Options;
+    function createGetFlvRequest(videoId: string): Axios.AxiosRequestConfig;
     /**
      * Create Request object to download video from smile server.
      * @param {string} videoId
      * @param {string} videoUrl
-     * @returns {Request.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Request.Options;
+    function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Axios.AxiosRequestConfig;
     /**
      * Create Request object to start session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {DmcSession} session
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): RequestPromise.Options;
+    function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): Axios.AxiosRequestConfig;
     /**
      * Create Request object to keep session on dmc server.
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {DmcSessionResult} dmcSession
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): RequestPromise.Options;
+    function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): Axios.AxiosRequestConfig;
     /**
      * Create Request object to download video from dmc server.
      * @param {string} videoId
      * @param {string} videoUrl
-     * @returns {Request.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Request.Options;
-    const createGetCommentRequest: (body: string) => Request.Options;
-    function createGetCommentByJsonRequest(body: string): Request.Options;
-    function createGetCommentByXMLRequest(body: string): Request.Options;
-    function createGetThreadKeyRequest(threadId: number): Request.Options;
-    function createGetWaybackKeyRequest(threadId: number): Request.Options;
+    function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Axios.AxiosRequestConfig;
+    const createGetCommentRequest: (request: CommentRequest) => Axios.AxiosRequestConfig;
+    function createGetCommentByJsonRequest(request: CommentRequest): Axios.AxiosRequestConfig;
+    function createGetCommentByXMLRequest(body: string): Axios.AxiosRequestConfig;
+    function createGetThreadKeyRequest(threadId: number): Axios.AxiosRequestConfig;
+    function createGetWaybackKeyRequest(threadId: number): Axios.AxiosRequestConfig;
 }

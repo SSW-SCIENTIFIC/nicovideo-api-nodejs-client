@@ -14,21 +14,19 @@ import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 import {ThumbnailInformation} from "./ThumbnailInformation";
 import {FlvInformation} from "./FlvInformation";
 import {ThreadKey} from "./ThreadKey";
+import {CommentRequest} from "./CommentRequest";
+import {AxiosRequestConfig} from "axios";
 
 /**
  * Access nicovideo.jp Level API Directly.
  */
 export class Video {
-    private request: typeof Request;
-    private requestPromise: typeof RequestPromise;
-
     /**
      * @constructor
      * @param {Session} session
      */
     public constructor(private session: Session) {
-        this.request = Request.defaults({jar: session.jar});
-        this.requestPromise = RequestPromise.defaults({jar: session.jar});
+        // do nothing
     }
 
     /**
@@ -38,7 +36,7 @@ export class Video {
      */
     public async getThumbInfo(videoId: string): Promise<ThumbnailInformation> {
         return xml2js(
-            await this.requestPromise(VideoAPI.createGetThumbInfoRequest(videoId)),
+            (await this.session.client.request(VideoAPI.createGetThumbInfoRequest(videoId))).data,
             { compact: true },
         );
     }
@@ -49,7 +47,9 @@ export class Video {
      * @returns {Promise<string>}
      */
     public async getFlv(videoId: string): Promise<FlvInformation> {
-        return QueryString.parse(await this.requestPromise(VideoAPI.createGetFlvRequest(videoId)));
+        return QueryString.parse(
+            (await this.session.client.request(VideoAPI.createGetFlvRequest(videoId))).data
+        );
     }
 
     /**
@@ -59,8 +59,10 @@ export class Video {
      * @returns {Promise<string>}
      */
     public async getWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
-        this.session.jar.setCookie(this.request.cookie("watch_html5=" + (isHTML5 ? "1" : "0")), APIUrl.WATCH + videoId);
-        return await this.requestPromise(VideoAPI.createWatchRequest(videoId));
+        const options: AxiosRequestConfig = VideoAPI.createWatchRequest(videoId);
+        options.headers["Set-Cookie"] = "watch_html5=" + (isHTML5 ? "1" : "0");
+
+        return (await this.session.client.request(VideoAPI.createWatchRequest(videoId))).data;
     }
 
     /**
@@ -70,7 +72,8 @@ export class Video {
      * @returns {Promise<WatchData>}
      */
     public async getWatchData(videoId: string, isHTML5: boolean = true): Promise<WatchData> {
-        let dom = cheerio.load(await this.getWatchPage(videoId, isHTML5).catch((err) => ""));
+        let dom = cheerio.load(await this.getWatchPage(videoId, isHTML5));
+
         return isHTML5 ?
             JSON.parse(dom("#js-initial-watch-data").attr("data-api-data") || "{}") :
             JSON.parse(dom("#watchAPIDataContainer").text() || "{}");
@@ -84,11 +87,9 @@ export class Video {
      * @returns {Promise<DmcSessionResult>}
      */
     public async createDmcSession(videoId: string, apiUrl: string, session: DmcSession): Promise<DmcSessionResult> {
-        return JSON.parse(
-            await this.requestPromise(
-                VideoAPI.createDmcSessionRequest(videoId, apiUrl, session),
-            )
-        ).data.session;
+        return (await this.session.client.request(
+            VideoAPI.createDmcSessionRequest(videoId, apiUrl, session),
+        )).data.data.session;
     }
 
     /**
@@ -99,27 +100,31 @@ export class Video {
      * @returns {Promise<DmcSessionResult>}
      */
     public async sendDmcHeartbeat(videoId: string, apiUrl: string, session: DmcSessionResult): Promise<DmcSessionResult> {
-        return await this.requestPromise(
-            VideoAPI.createDmcHeartbeatRequest(videoId, apiUrl, session)
-        );
+        return (await this.session.client.request(
+            VideoAPI.createDmcHeartbeatRequest(videoId, apiUrl, session),
+        )).data.data.session;
     }
 
     public async getThreadKey(threadId: number): Promise<ThreadKey> {
-        const result = QueryString.parse(await this.requestPromise(VideoAPI.createGetThreadKeyRequest(threadId)));
+        const result = QueryString.parse(
+            (await this.session.client.request(VideoAPI.createGetThreadKeyRequest(threadId))).data,
+        );
         return { key: result.threadkey, force_184: result.force_184 == 1 };
     }
 
-    public readonly getComment: (body: string) => Promise<string> = this.getCommentByJson;
+    public readonly getComment: (request: CommentRequest) => Promise<string> = this.getCommentByJson;
 
-    public async getCommentByJson(body: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.createGetCommentByJsonRequest(body));
+    public async getCommentByJson(request: CommentRequest): Promise<string> {
+        return (await this.session.client.request(VideoAPI.createGetCommentByJsonRequest(request))).data;
     }
 
     public async getCommentByXML(body: string): Promise<string> {
-        return await this.requestPromise(VideoAPI.createGetCommentByXMLRequest(body));
+        return (await this.session.client.request(VideoAPI.createGetCommentByXMLRequest(body))).data;
     }
 
     public async getWaybackKey(threadId: number): Promise<string> {
-        return QueryString.parse(await this.requestPromise(VideoAPI.createGetWaybackKeyRequest(threadId))).waybackkey;
+        return QueryString.parse(
+            (await this.session.client.request(VideoAPI.createGetWaybackKeyRequest(threadId))).data,
+        ).waybackkey;
     }
 }

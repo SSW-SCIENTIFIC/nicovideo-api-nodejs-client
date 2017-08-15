@@ -8,47 +8,36 @@ export enum Language {
 }
 
 export type CommentRequest
-    = Array<{ thread: OfficialCommentThreadRequest } | { thread_leaves: OfficialCommentThreadLeavesRequest }>
-        | Array<{ thread: GeneralCommentThreadRequest } | { thread_leaves: GeneralCommentThreadLeavesRequest }>;
+    = Array<{ thread: CommentRequestCommon } | { thread_leaves: CommentRequestCommon }>;
 
-export interface OfficialCommentThreadRequest {
-    thread: string;
-    version: CommentVersion;
-    language: Language; // 0 for japanese?
-    user_id: string;
-    with_global: number; // always 1?
-    scores: number; // always 1?
-    nicoru: number; // always 0?
-    userkey: string;
-}
-
-export interface OfficialCommentThreadLeavesRequest {
-    thread: string;
-    language: Language;
-    user_id: string;
-    content: string;
-    scores: number;
-    nicoru: number;
-    userkey: string;
-}
-
-export interface GeneralCommentThreadRequest {
+export interface CommentRequestCommon {
     thread: number;
     version: CommentVersion;
     language: Language;
-    user_id: number;
     with_global: number;
     scores: number;
     nicoru: number;
-    userkey: string;
+
+    force_184?: number;
+    threadkey?: string;
+
+    waybackkey?: string;
+    when?: number;
+    user_id?: number;
+
+    fork?: number;
+    res_from?: number;
+
+    content?: string;
 }
 
-export interface GeneralCommentThreadLeavesRequest {
-    thread: number;
-    language: Language;
-    user_id: number;
-    content: string;
-    scores: number;
-    nicoru: number;
-    userkey: string;
+export interface OfficialCommentRequestCommon {
+    force_184: number;
+    threadkey: string;
+}
+
+export interface CommentWaybackRequestCommon {
+    waybackkey: string;
+    when: number;
+    user_id: string;
 }

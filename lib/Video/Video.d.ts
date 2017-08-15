@@ -1,17 +1,15 @@
 /// <reference types="node" />
-/// <reference types="request" />
-import * as Request from "request";
 import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { DmcSessionResult } from "./Dmc/DmcSessionResult";
+import { ThreadKey } from "./ThreadKey";
+import * as stream from "stream";
 export * from "../Common";
 export declare class Video {
     private session;
     private lowLevel;
-    private request;
-    private requestPromise;
     /**
-     * Video API Client constructor.
+     * @constructor
      * @param {Session} session
      */
     constructor(session: Session);
@@ -38,13 +36,13 @@ export declare class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromSmile(videoId: string): Promise<Request.Request>;
+    getVideoStreamFromSmile(videoId: string): Promise<stream.Readable>;
     /**
      *
      * @param {WatchData} watchData
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromSmile(watchData: WatchData): Promise<Request.Request>;
+    getVideoStreamFromSmile(watchData: WatchData): Promise<stream.Readable>;
     /**
      * Create Session for DMC Server.
      * @param {WatchData} watchAPIData
@@ -68,13 +66,13 @@ export declare class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromDmc(videoId: string): Promise<Request.Request>;
+    getVideoStreamFromDmc(videoId: string): Promise<stream.Readable>;
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
+    getVideoStreamFromDmc(watchAPIData: WatchData): Promise<stream.Readable>;
     /**
      *
      * @param videoId
@@ -84,6 +82,6 @@ export declare class Video {
     getVideo(videoId: string): Promise<void>;
     getVideoStream(): Promise<void>;
     getComment(watchData: WatchData): Promise<void>;
-    getThreadKey(threadId: number): Promise<string>;
-    getThreadKey(watchData: WatchData): Promise<string>;
+    getThreadKey(threadId: number): Promise<ThreadKey>;
+    getThreadKey(watchData: WatchData): Promise<ThreadKey>;
 }

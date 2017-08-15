@@ -36,6 +36,8 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "@3846masa/axios-cookiejar-support": "^0.1.1",
+    "axios": "^0.16.2",
     "cheerio": "^1.0.0-rc.2",
     "query-string": "^5.0.0",
     "request": "^2.81.0",

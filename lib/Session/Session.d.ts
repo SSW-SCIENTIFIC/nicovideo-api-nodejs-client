@@ -1,19 +1,16 @@
-import ToughCookie from "tough-cookie";
-export declare type ToughCookieJar = typeof ToughCookie.CookieJar;
+import * as Axios from "axios";
 /**
  * Class representing a session for NicoNico Video.
  */
 export declare class Session {
-    private cookieJar;
+    readonly client: Axios.AxiosInstance;
     private active;
     private email;
-    private request;
-    readonly jar: any;
     /**
      * @constructor
-     * @param {ToughCookieJar} cookieJar
+     * @param {AxiosInstance} client axios http client used internally.
      */
-    constructor(cookieJar?: ToughCookieJar);
+    constructor(client?: Axios.AxiosInstance);
     /**
      * Login to NicoNico Video.
      * @param {string} email
@@ -21,19 +18,14 @@ export declare class Session {
      * @returns {Promise<void>}
      */
     login(email: string, password: string): Promise<void>;
+    /**
+     * Logout from NicoNico Video.
+     * @returns {Promise<void>}
+     */
     logout(): Promise<void>;
     /**
-     * @returns {boolean} This getter returns if this session is active.
+     * Check the session is active.
+     * @returns {Promise<boolean>} This getter returns if this session is active.
      */
-    readonly isActive: boolean;
-    /**
-     *
-     * @returns {string}
-     */
-    toJSON(): string;
-    /**
-     *
-     * @param {string} serialized
-     */
-    fromJSON(serialized: string): void;
+    isActive(): Promise<boolean>;
 }

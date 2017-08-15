@@ -1,38 +1,50 @@
 import * as Request from "request";
 import * as RequestPromise from "request-promise";
 
+import * as Axios from "axios";
+
 import * as APIUrl from "./APIUrls";
 import { DmcSession } from "./Video/Dmc/DmcSession";
-import {DmcSessionResult} from "./Video/Dmc/DmcSessionResult";
+import { DmcSessionResult } from "./Video/Dmc/DmcSessionResult";
+import { CommentRequest } from "./Video/CommentRequest";
 
 export namespace Session {
     /**
      * Create Request object to login into nicovideo.jp.
      * @param {string} email An E-mail used to login.
      * @param {string} password A password used to login.
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createLoginRequest(email: string, password: string): RequestPromise.Options {
+    export function createLoginRequest(email: string, password: string): Axios.AxiosRequestConfig {
         return {
             method: "POST",
-            uri: APIUrl.LOGIN,
-            form: {
+            url: APIUrl.LOGIN,
+            data: {
                 mail_tel: email,
                 password: password,
             },
-            simple: false,
+            withCredentials: true,
         };
     }
 
     /**
      * Create Request object to logout from nicovideo.jp.
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      * @todo check is collect.
      */
-    export function createLogoutRequest(): RequestPromise.Options {
+    export function createLogoutRequest(): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: APIUrl.LOGOUT,
+            url: APIUrl.LOGOUT,
+            withCredentials: true,
+        };
+    }
+
+    export function createCheckActiveRequest(): Axios.AxiosRequestConfig {
+        return {
+            method: "GET",
+            url: APIUrl.MYLIST_DEFAULT,
+            withCredentials: true,
         };
     }
 }
@@ -41,36 +53,39 @@ export namespace Video {
     /**
      * Create Reqeust object to access getthumbinfo API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createGetThumbInfoRequest(videoId: string): RequestPromise.Options {
+    export function createGetThumbInfoRequest(videoId: string): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: APIUrl.GET_THUMB_INFO + videoId,
+            url: APIUrl.GET_THUMB_INFO + videoId,
         };
     }
 
     /**
      * Create Request object to access watch API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createWatchRequest(videoId: string): RequestPromise.Options {
+    export function createWatchRequest(videoId: string): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: APIUrl.WATCH + videoId,
+            url: APIUrl.WATCH + videoId,
         };
     }
 
     /**
      * Create Request object to access getflv API.
      * @param {string} videoId
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createGetFlvRequest(videoId: string): RequestPromise.Options {
+    export function createGetFlvRequest(videoId: string): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: APIUrl.GET_FLV + videoId + (videoId.match(/^nm/) ? "?as3=1" : ""),
+            url: APIUrl.GET_FLV + videoId + (videoId.match(/^nm/) ? "?as3=1" : ""),
+            params: {
+                as3: videoId.match(/^nm/) ? 1 : undefined,
+            },
         };
     }
 
@@ -78,13 +93,12 @@ export namespace Video {
      * Create Request object to download video from smile server.
      * @param {string} videoId
      * @param {string} videoUrl
-     * @returns {Request.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Request.Options {
+    export function createDownloadFromSmileRequest(videoId: string, videoUrl: string): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: videoUrl,
-            encoding: null,
+            url: videoUrl,
             headers: {
                 "Referer": APIUrl.WATCH + videoId,
             },
@@ -96,19 +110,23 @@ export namespace Video {
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {DmcSession} session
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): RequestPromise.Options {
+    export function createDmcSessionRequest(videoId: string, apiUrl: string, session: DmcSession): Axios.AxiosRequestConfig {
         return {
-            uri: apiUrl + "/?_format=json",
+            url: apiUrl,
             method: "POST",
-            body: JSON.stringify({session: session}),
+            data: JSON.stringify({session: session}),
+            params: {
+                _format: "json",
+            },
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Referer": APIUrl.WATCH + videoId,
                 "Origin": APIUrl.ORIGIN,
             },
+            responseType: "json",
         };
     }
 
@@ -117,19 +135,23 @@ export namespace Video {
      * @param {string} videoId
      * @param {string} apiUrl
      * @param {DmcSessionResult} dmcSession
-     * @returns {RequestPromise.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): RequestPromise.Options {
+    export function createDmcHeartbeatRequest(videoId: string, apiUrl: string, dmcSession: DmcSessionResult): Axios.AxiosRequestConfig {
         return {
-            uri: apiUrl + "/" + dmcSession.id + "?_format=json",
+            url: apiUrl + "/" + dmcSession.id,
             method: "PUT",
-            body: JSON.stringify({ session: dmcSession }),
+            data: JSON.stringify({ session: dmcSession }),
+            params: {
+                _format: "json",
+            },
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
                 "Referer": APIUrl.WATCH + videoId,
                 "Origin": APIUrl.ORIGIN,
             },
+            responseType: "json",
         };
     }
 
@@ -137,13 +159,12 @@ export namespace Video {
      * Create Request object to download video from dmc server.
      * @param {string} videoId
      * @param {string} videoUrl
-     * @returns {Request.Options}
+     * @returns {Axios.AxiosRequestConfig}
      */
-    export function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Request.Options {
+    export function createDownloadFromDmcRequest(videoId: string, videoUrl: string): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: videoUrl,
-            encoding: null,
+            url: videoUrl,
             headers: {
                 "Origin": APIUrl.ORIGIN,
                 "Range": "bytes=0-",
@@ -152,35 +173,41 @@ export namespace Video {
         };
     }
 
-    export const createGetCommentRequest: (body: string) => Request.Options = createGetCommentByJsonRequest;
+    export const createGetCommentRequest: (request: CommentRequest) => Axios.AxiosRequestConfig = createGetCommentByJsonRequest;
 
-    export function createGetCommentByJsonRequest(body: string): Request.Options {
+    export function createGetCommentByJsonRequest(request: CommentRequest): Axios.AxiosRequestConfig {
         return {
             method: "POST",
-            uri: APIUrl.COMMENT_JSON,
-            body: body,
+            url: APIUrl.COMMENT_JSON,
+            data: JSON.stringify(request),
         };
     }
 
-    export function createGetCommentByXMLRequest(body: string): Request.Options {
+    export function createGetCommentByXMLRequest(body: string): Axios.AxiosRequestConfig {
         return {
             method: "POST",
-            uri: APIUrl.COMMENT_XML,
-            body: body,
+            url: APIUrl.COMMENT_XML,
+            data: body,
         };
     }
 
-    export function createGetThreadKeyRequest(threadId: number): Request.Options {
+    export function createGetThreadKeyRequest(threadId: number): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: APIUrl.GET_THREAD_KEY + "?thread=" + threadId,
+            url: APIUrl.GET_THREAD_KEY,
+            params: {
+                thread: threadId,
+            },
         };
     }
 
-    export function createGetWaybackKeyRequest(threadId: number): Request.Options {
+    export function createGetWaybackKeyRequest(threadId: number): Axios.AxiosRequestConfig {
         return {
             method: "GET",
-            uri: "http://flapi.nicovideo.jp/api/getwaybackkey?thread=" + threadId,
+            url: APIUrl.GET_WAYBACK_KEY,
+            params: {
+                thread: threadId,
+            },
         };
     }
 }

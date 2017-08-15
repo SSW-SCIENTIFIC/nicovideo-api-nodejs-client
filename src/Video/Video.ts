@@ -15,22 +15,22 @@ import Exception from "../Exception";
 import {DmcSession} from "./Dmc/DmcSession";
 import * as qs from "querystring";
 import {DmcSessionResult} from "./Dmc/DmcSessionResult";
+import {ThreadKey} from "./ThreadKey";
+import {AxiosRequestConfig} from "axios";
+
+import * as stream from "stream";
 
 export * from "../Common";
 
 export class Video {
     private lowLevel: VideoLow.Video;
-    private request: typeof Request;
-    private requestPromise: typeof RequestPromise;
 
     /**
-     * Video API Client constructor.
+     * @constructor
      * @param {Session} session
      */
     public constructor(private session: Session) {
-        this.request = Request.defaults({ jar: this.session.jar });
-        this.requestPromise = RequestPromise.defaults({ jar: this.session.jar });
-        this.lowLevel = new VideoLow.Video(this.session);
+        this.lowLevel = new VideoLow.Video(session);
     }
 
     /**
@@ -66,7 +66,9 @@ export class Video {
             await this.lowLevel.getWatchPage(videoInfo.id);
         }
 
-        return await this.requestPromise(VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url));
+        return (await this.session.client.request(
+            VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url)
+        )).data;
     }
 
     /**
@@ -74,16 +76,16 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromSmile(videoId: string): Promise<Request.Request>;
+    public async getVideoStreamFromSmile(videoId: string): Promise<stream.Readable>;
 
     /**
      *
      * @param {WatchData} watchData
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromSmile(watchData: WatchData): Promise<Request.Request>;
+    public async getVideoStreamFromSmile(watchData: WatchData): Promise<stream.Readable>;
 
-    public async getVideoStreamFromSmile(param: string | WatchData): Promise<Request.Request> {
+    public async getVideoStreamFromSmile(param: string | WatchData): Promise<stream.Readable> {
         let videoInfo: VideoInformation;
 
         if (typeof param === "string") {
@@ -93,7 +95,10 @@ export class Video {
             await this.lowLevel.getWatchPage(videoInfo.id);
         }
 
-        return this.request(VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url));
+        const options: AxiosRequestConfig = VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url);
+        options.responseType = "stream";
+
+        return (await this.session.client.request(options)).data;
     }
 
     /**
@@ -149,8 +154,9 @@ export class Video {
             return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session);
         }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return this.requestPromise(VideoAPI.createDownloadFromDmcRequest(id, session.content_uri))
-            .finally(() => clearInterval(intervalId));
+        return (await this.session.client.request(
+            VideoAPI.createDownloadFromDmcRequest(id, session.content_uri))
+        ).data.on("close", () => clearInterval(intervalId));
     }
 
     /**
@@ -158,15 +164,15 @@ export class Video {
      * @param {string} videoId
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromDmc(videoId: string): Promise<Request.Request>;
+    public async getVideoStreamFromDmc(videoId: string): Promise<stream.Readable>;
 
     /**
      *
      * @param {WatchData} watchAPIData
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromDmc(watchAPIData: WatchData): Promise<Request.Request>;
-    public async getVideoStreamFromDmc(param: string | WatchData): Promise<Request.Request> {
+    public async getVideoStreamFromDmc(watchAPIData: WatchData): Promise<stream.Readable>;
+    public async getVideoStreamFromDmc(param: string | WatchData): Promise<stream.Readable> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -188,10 +194,9 @@ export class Video {
             return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session);
         }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return this.request(
+        return (await this.session.client.request(
             VideoAPI.createDownloadFromDmcRequest(watchAPIData.video.id, session.content_uri),
-            () => clearInterval(intervalId),
-        );
+        )).data.on("close", () => clearInterval(intervalId));
     }
 
     /**
@@ -201,11 +206,7 @@ export class Video {
      * @todo implement
      */
     public async getVideo(videoId: string) {
-        const request = (await this.getVideoStreamFromDmc(videoId));
-        request.on("response", (response: http.IncomingMessage) : void => {
-            request.abort();
 
-        });
     }
 
     public async getVideoStream() {
@@ -220,9 +221,9 @@ export class Video {
         }
     }
 
-    public async getThreadKey(threadId: number): Promise<string>;
-    public async getThreadKey(watchData: WatchData): Promise<string>;
-    public async getThreadKey(param: number | WatchData): Promise<string> {
+    public async getThreadKey(threadId: number): Promise<ThreadKey>;
+    public async getThreadKey(watchData: WatchData): Promise<ThreadKey>;
+    public async getThreadKey(param: number | WatchData): Promise<ThreadKey> {
         let threadId: number;
 
         if (typeof param === "number") {

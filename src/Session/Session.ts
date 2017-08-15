@@ -1,13 +1,11 @@
-import * as Request from "request";
-import * as RequestPromise from "request-promise";
-import ToughCookie from "tough-cookie";
+import axios, * as Axios from "axios";
+import * as axiosCookieJarSupport from "@3846masa/axios-cookiejar-support";
+import { CookieJar } from "tough-cookie";
 
 import { Session as SessionAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import SessionException from "./SessionException";
-
-type Cookie = typeof ToughCookie.Cookie;
-export type ToughCookieJar = typeof ToughCookie.CookieJar;
+import { MyListResponse } from "../MyList/MyList";
 
 /**
  * Class representing a session for NicoNico Video.
@@ -15,19 +13,15 @@ export type ToughCookieJar = typeof ToughCookie.CookieJar;
 export class Session {
     private active: boolean;
     private email: string;
-    private request: typeof RequestPromise;
-
-    public get jar() {
-        return this.cookieJar;
-    }
 
     /**
      * @constructor
-     * @param {ToughCookieJar} cookieJar
+     * @param {AxiosInstance} client axios http client used internally.
      */
-    public constructor(private cookieJar: ToughCookieJar = Request.jar()) {
-        this.active = false;
-        this.request = RequestPromise.defaults({ jar: this.jar });
+    public constructor(
+        public readonly client: Axios.AxiosInstance = axiosCookieJarSupport(axios.create({ jar: new CookieJar() }))
+    ) {
+        // do nothing
     }
 
     /**
@@ -37,50 +31,23 @@ export class Session {
      * @returns {Promise<void>}
      */
     public async login(email: string, password: string): Promise<void> {
-        return this.request(SessionAPI.createLoginRequest(email, password)).then(() => {
-            let count = this.cookieJar.getCookies(APIUrl.LOGIN)
-                .filter((cookie: Cookie, index: number) => cookie.key === "user_session").length;
-
-            if (count === 0) {
-                throw new SessionException("Failed to Login.");
-            }
-
-            this.email = email;
-            this.active = true;
-
-            return Promise.resolve();
-        });
+        this.client.request(SessionAPI.createLoginRequest(email, password));
     }
 
+    /**
+     * Logout from NicoNico Video.
+     * @returns {Promise<void>}
+     */
     public async logout(): Promise<void> {
-        return this.request(SessionAPI.createLogoutRequest());
+        this.client.request(SessionAPI.createLogoutRequest());
     }
 
     /**
-     * @returns {boolean} This getter returns if this session is active.
+     * Check the session is active.
+     * @returns {Promise<boolean>} This getter returns if this session is active.
      */
-    public get isActive(): boolean {
-        return this.active;
-    }
-
-    /**
-     *
-     * @returns {string}
-     */
-    public toJSON(): string {
-        if (!this.isActive) {
-            throw new Error("Session is not logged in.");
-        }
-
-        return JSON.stringify(this.cookieJar);
-    }
-
-    /**
-     *
-     * @param {string} serialized
-     */
-    public fromJSON(serialized: string): void {
-        this.cookieJar = JSON.parse(serialized);
-        this.active = true;
+    public async isActive(): Promise<boolean> {
+        const result: MyListResponse = (await this.client.request(SessionAPI.createCheckActiveRequest())).data;
+        return result.status === "ok";
     }
 }
