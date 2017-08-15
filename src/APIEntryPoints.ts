@@ -71,6 +71,7 @@ export namespace Video {
         return {
             method: "GET",
             url: APIUrl.WATCH + videoId,
+            withCredentials: true,
         };
     }
 
