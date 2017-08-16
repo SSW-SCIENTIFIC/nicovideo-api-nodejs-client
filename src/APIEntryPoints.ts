@@ -101,6 +101,7 @@ export namespace Video {
                 "Referer": APIUrl.WATCH + videoId,
             },
             withCredentials: true,
+            responseType: "blob",
         };
     }
 
@@ -169,6 +170,7 @@ export namespace Video {
                 "Range": "bytes=0-",
                 "Referer": APIUrl.WATCH + videoId,
             },
+            responseType: "blob",
         };
     }
 

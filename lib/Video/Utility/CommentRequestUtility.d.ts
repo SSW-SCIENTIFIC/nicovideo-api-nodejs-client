@@ -13,6 +13,6 @@ export interface CommentRequestUtilityOptions {
     content?: string;
 }
 export declare class CommentRequestUtility {
-    static createCommentRequest(watchData: WatchData): Comment.CommentRequest;
+    static createCommentRequest(watchData: WatchData, options: CommentRequestUtilityOptions): Comment.CommentRequest;
     static createGeneralCommentRequest(threadId: number, options?: CommentRequestUtilityOptions): Comment.CommentRequest;
 }
