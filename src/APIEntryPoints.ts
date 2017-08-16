@@ -1,6 +1,3 @@
-import * as Request from "request";
-import * as RequestPromise from "request-promise";
-
 import * as Axios from "axios";
 
 import * as APIUrl from "./APIUrls";
@@ -103,6 +100,7 @@ export namespace Video {
             headers: {
                 "Referer": APIUrl.WATCH + videoId,
             },
+            withCredentials: true,
         };
     }
 

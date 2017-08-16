@@ -1,8 +1,6 @@
 import * as QueryString from "querystring";
 import {xml2js} from "xml-js";
 import * as cheerio from "cheerio";
-import * as Request from "request";
-import * as RequestPromise from "request-promise";
 
 import { WatchData } from "../Common/WatchData";
 
