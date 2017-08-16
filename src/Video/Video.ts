@@ -44,7 +44,7 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    public async getVideoFromSmile(videoId: string, progressHandler?: () => void): Promise<Buffer>;
+    public async getVideoFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
 
     /**
      *
@@ -52,9 +52,9 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    public async getVideoFromSmile(watchData: WatchData, progressHandler?: () => void): Promise<Buffer>;
+    public async getVideoFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
 
-    public async getVideoFromSmile(param: string | WatchData, progressHandler: () => void = () => {}): Promise<Buffer> {
+    public async getVideoFromSmile(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<Buffer> {
         let videoInfo: VideoInformation;
 
         if (typeof param == "string") {
@@ -76,7 +76,7 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromSmile(videoId: string, progressHandler?: () => void): Promise<stream.Readable>;
+    public async getVideoStreamFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
 
     /**
      *
@@ -84,9 +84,9 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromSmile(watchData: WatchData, progressHandler?: () => void): Promise<stream.Readable>;
+    public async getVideoStreamFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
 
-    public async getVideoStreamFromSmile(param: string | WatchData, progressHandler: () => void = () => {}): Promise<stream.Readable> {
+    public async getVideoStreamFromSmile(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<stream.Readable> {
         let videoInfo: VideoInformation;
 
         if (typeof param === "string") {
@@ -126,7 +126,7 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    public async getVideoFromDmc(videoId: string, progressHandler?: () => void): Promise<Buffer>;
+    public async getVideoFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
 
     /**
      *
@@ -134,9 +134,9 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    public async getVideoFromDmc(watchAPIData: WatchData, progressHandler?: () => void): Promise<Buffer>;
+    public async getVideoFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
 
-    public async getVideoFromDmc(param: string | WatchData, progressHandler: () => void = () => {}): Promise<Buffer> {
+    public async getVideoFromDmc(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<Buffer> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -175,7 +175,7 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromDmc(videoId: string, progressHandler?: () => void): Promise<stream.Readable>;
+    public async getVideoStreamFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
 
     /**
      *
@@ -183,8 +183,8 @@ export class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    public async getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler?: () => void): Promise<stream.Readable>;
-    public async getVideoStreamFromDmc(param: string | WatchData, progressHandler: () => void = () => {}): Promise<stream.Readable> {
+    public async getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    public async getVideoStreamFromDmc(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<stream.Readable> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
