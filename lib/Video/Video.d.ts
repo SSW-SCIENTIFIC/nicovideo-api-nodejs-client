@@ -25,28 +25,28 @@ export declare class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    getVideoFromSmile(videoId: string, progressHandler: () => void): Promise<Buffer>;
+    getVideoFromSmile(videoId: string, progressHandler?: () => void): Promise<Buffer>;
     /**
      *
      * @param {WatchData} watchData
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    getVideoFromSmile(watchData: WatchData, progressHandler: () => void): Promise<Buffer>;
+    getVideoFromSmile(watchData: WatchData, progressHandler?: () => void): Promise<Buffer>;
     /**
      *
      * @param {string} videoId
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromSmile(videoId: string, progressHandler: () => void): Promise<stream.Readable>;
+    getVideoStreamFromSmile(videoId: string, progressHandler?: () => void): Promise<stream.Readable>;
     /**
      *
      * @param {WatchData} watchData
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromSmile(watchData: WatchData, progressHandler: () => void): Promise<stream.Readable>;
+    getVideoStreamFromSmile(watchData: WatchData, progressHandler?: () => void): Promise<stream.Readable>;
     /**
      * Create Session for DMC Server.
      * @param {WatchData} watchAPIData
@@ -59,28 +59,28 @@ export declare class Video {
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    getVideoFromDmc(videoId: string, progressHandler: () => void): Promise<Buffer>;
+    getVideoFromDmc(videoId: string, progressHandler?: () => void): Promise<Buffer>;
     /**
      *
      * @param {WatchData} watchAPIData
      * @param {() => void} progressHandler
      * @returns {Promise<Buffer>}
      */
-    getVideoFromDmc(watchAPIData: WatchData, progressHandler: () => void): Promise<Buffer>;
+    getVideoFromDmc(watchAPIData: WatchData, progressHandler?: () => void): Promise<Buffer>;
     /**
      *
      * @param {string} videoId
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromDmc(videoId: string, progressHandler: () => void): Promise<stream.Readable>;
+    getVideoStreamFromDmc(videoId: string, progressHandler?: () => void): Promise<stream.Readable>;
     /**
      *
      * @param {WatchData} watchAPIData
      * @param {() => void} progressHandler
      * @returns {Promise<request.Request>}
      */
-    getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler: () => void): Promise<stream.Readable>;
+    getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler?: () => void): Promise<stream.Readable>;
     /**
      *
      * @param videoId
