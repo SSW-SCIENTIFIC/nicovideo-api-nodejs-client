@@ -1,9 +1,8 @@
-/// <reference types="node" />
 import { WatchData } from "../Common/WatchData";
 import { Session } from "../Session/Session";
 import { DmcSessionResult } from "./Dmc/DmcSessionResult";
 import { ThreadKey } from "./ThreadKey";
-import * as stream from "stream";
+import { AxiosResponse } from "axios";
 export * from "../Common";
 export declare class Video {
     private session;
@@ -22,31 +21,27 @@ export declare class Video {
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    getVideoFromSmile(videoId: string): Promise<AxiosResponse>;
     /**
      *
      * @param {WatchData} watchData
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    getVideoFromSmile(watchData: WatchData): Promise<AxiosResponse>;
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoStreamFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    getVideoStreamFromSmile(videoId: string): Promise<AxiosResponse>;
     /**
      *
      * @param {WatchData} watchData
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoStreamFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    getVideoStreamFromSmile(watchData: WatchData): Promise<AxiosResponse>;
     /**
      * Create Session for DMC Server.
      * @param {WatchData} watchAPIData
@@ -56,31 +51,27 @@ export declare class Video {
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    getVideoFromDmc(videoId: string): Promise<AxiosResponse>;
     /**
      *
      * @param {WatchData} watchAPIData
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    getVideoFromDmc(watchAPIData: WatchData): Promise<AxiosResponse>;
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoStreamFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    getVideoStreamFromDmc(videoId: string): Promise<AxiosResponse>;
     /**
      *
      * @param {WatchData} watchAPIData
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    getVideoStreamFromDmc(watchAPIData: WatchData): Promise<AxiosResponse>;
     /**
      *
      * @param videoId

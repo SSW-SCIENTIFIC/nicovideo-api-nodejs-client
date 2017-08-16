@@ -12,7 +12,7 @@ import {DmcSession} from "./Dmc/DmcSession";
 import * as qs from "querystring";
 import {DmcSessionResult} from "./Dmc/DmcSessionResult";
 import {ThreadKey} from "./ThreadKey";
-import {AxiosRequestConfig} from "axios";
+import {AxiosRequestConfig, AxiosResponse} from "axios";
 
 import * as stream from "stream";
 
@@ -41,20 +41,18 @@ export class Video {
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    public async getVideoFromSmile(videoId: string): Promise<AxiosResponse>;
 
     /**
      *
      * @param {WatchData} watchData
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    public async getVideoFromSmile(watchData: WatchData): Promise<AxiosResponse>;
 
-    public async getVideoFromSmile(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<Buffer> {
+    public async getVideoFromSmile(param: string | WatchData): Promise<AxiosResponse> {
         let videoInfo: VideoInformation;
 
         if (typeof param == "string") {
@@ -65,28 +63,25 @@ export class Video {
         }
 
         const options: AxiosRequestConfig = VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url);
-        options.onDownloadProgress = progressHandler;
 
-        return (await this.session.client.request(options)).data;
+        return await this.session.client.request(options);
     }
 
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoStreamFromSmile(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    public async getVideoStreamFromSmile(videoId: string): Promise<AxiosResponse>;
 
     /**
      *
      * @param {WatchData} watchData
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoStreamFromSmile(watchData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    public async getVideoStreamFromSmile(watchData: WatchData): Promise<AxiosResponse>;
 
-    public async getVideoStreamFromSmile(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<stream.Readable> {
+    public async getVideoStreamFromSmile(param: string | WatchData): Promise<AxiosResponse> {
         let videoInfo: VideoInformation;
 
         if (typeof param === "string") {
@@ -98,9 +93,8 @@ export class Video {
 
         const options: AxiosRequestConfig = VideoAPI.createDownloadFromSmileRequest(videoInfo.id, videoInfo.smileInfo.url);
         options.responseType = "stream";
-        options.onDownloadProgress = progressHandler;
 
-        return (await this.session.client.request(options)).data;
+        return await this.session.client.request(options);
     }
 
     /**
@@ -123,20 +117,18 @@ export class Video {
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    public async getVideoFromDmc(videoId: string): Promise<AxiosResponse>;
 
     /**
      *
      * @param {WatchData} watchAPIData
-     * @param {() => void} progressHandler
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<Buffer>;
+    public async getVideoFromDmc(watchAPIData: WatchData): Promise<AxiosResponse>;
 
-    public async getVideoFromDmc(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<Buffer> {
+    public async getVideoFromDmc(param: string | WatchData): Promise<AxiosResponse> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -154,7 +146,6 @@ export class Video {
         const apiUrl: string = watchAPIData.video.dmcInfo.session_api.urls[0].url;
 
         const options: AxiosRequestConfig = VideoAPI.createDownloadFromDmcRequest(id, session.content_uri);
-        options.onDownloadProgress = progressHandler;
 
         const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
@@ -166,25 +157,23 @@ export class Video {
             return arg;
         };
 
-        return (await this.session.client.request(options).then(fin).catch(fin)).data;
+        return await this.session.client.request(options).then(fin).catch(fin);
     }
 
     /**
      *
      * @param {string} videoId
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoStreamFromDmc(videoId: string, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
+    public async getVideoStreamFromDmc(videoId: string): Promise<AxiosResponse>;
 
     /**
      *
      * @param {WatchData} watchAPIData
-     * @param {() => void} progressHandler
-     * @returns {Promise<request.Request>}
+     * @returns {Promise<AxiosResponse>}
      */
-    public async getVideoStreamFromDmc(watchAPIData: WatchData, progressHandler?: (progressEvent) => void): Promise<stream.Readable>;
-    public async getVideoStreamFromDmc(param: string | WatchData, progressHandler: (progressEvent) => void = () => {}): Promise<stream.Readable> {
+    public async getVideoStreamFromDmc(watchAPIData: WatchData): Promise<AxiosResponse>;
+    public async getVideoStreamFromDmc(param: string | WatchData): Promise<AxiosResponse> {
         let watchAPIData: WatchData;
 
         if (typeof param === "string") {
@@ -203,14 +192,19 @@ export class Video {
 
         const options: AxiosRequestConfig = VideoAPI.createDownloadFromDmcRequest(watchAPIData.video.id, session.content_uri);
         options.responseType = "stream";
-        options.onDownloadProgress = progressHandler;
 
         const intervalId: NodeJS.Timer = setInterval(() => {
             console.log("beating...");
             return this.lowLevel.sendDmcHeartbeat(id, apiUrl, session);
         }, session.keep_method.heartbeat.lifetime * 0.9);
 
-        return (await this.session.client.request(options)).data.on("close", () => clearInterval(intervalId));
+        const result = await this.session.client.request(options);
+        result.data
+            .on("close", () => clearInterval(intervalId))
+            .on("end", () => clearInterval(intervalId))
+            .on("error", () => clearInterval(intervalId));
+
+        return result;
     }
 
     /**
