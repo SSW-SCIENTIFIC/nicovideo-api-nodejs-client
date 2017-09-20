@@ -16,3 +16,4 @@ export interface Category {
     suffix: string;
     children?: Array<Category>;
 }
+export declare const CategoryList: Array<Category>;

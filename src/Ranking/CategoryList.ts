@@ -19,7 +19,7 @@ export interface Category {
     children?: Array<Category>;
 }
 
-const CategoryList: Array<Category> = [
+export const CategoryList: Array<Category> = [
     {
         title: "カテゴリ合算",
         suffix: "all"
