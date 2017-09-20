@@ -9,3 +9,4 @@ export declare const COMMENT_XML = "http://nmsg.nicovideo.jp/api/";
 export declare const GET_THREAD_KEY = "http://flapi.nicovideo.jp/api/getthreadkey";
 export declare const GET_WAYBACK_KEY = "http://flapi.nicovideo.jp/api/getwaybackkey";
 export declare const MYLIST_DEFAULT = "http://www.nicovideo.jp/api/deflist/list";
+export declare const RANKING_RSS = "http://www.nicovideo.jp/ranking/";

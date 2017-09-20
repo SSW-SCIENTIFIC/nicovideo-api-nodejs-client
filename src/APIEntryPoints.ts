@@ -212,3 +212,16 @@ export namespace Video {
         };
     }
 }
+
+export namespace Ranking {
+    export function createGetRankingRSSRequest(period: string, type: string, suffix: string) {
+        return {
+            method: "GET",
+            url: APIUrl.RANKING_RSS + period + "/" + type + "/" + suffix,
+            param: {
+                rss: "2.0",
+                lang: "ja-JP",
+            },
+        };
+    }
+}
