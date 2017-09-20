@@ -220,7 +220,7 @@ export namespace Ranking {
             url: APIUrl.RANKING_RSS + period + "/" + type + "/" + suffix,
             params: {
                 rss: "2.0",
-                lang: "ja-JP",
+                lang: "ja-jp",
             },
         };
     }
