@@ -214,10 +214,10 @@ export namespace Video {
 }
 
 export namespace Ranking {
-    export function createGetRankingRSSRequest(period: string, type: string, suffix: string) {
+    export function createGetRankingRSSRequest(type: string, period: string, suffix: string) {
         return {
             method: "GET",
-            url: APIUrl.RANKING_RSS + period + "/" + type + "/" + suffix,
+            url: APIUrl.RANKING_RSS + type + "/" + period + "/" + suffix,
             params: {
                 rss: "2.0",
                 lang: "ja-jp",

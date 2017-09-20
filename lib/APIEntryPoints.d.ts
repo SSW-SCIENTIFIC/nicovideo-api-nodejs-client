@@ -74,7 +74,7 @@ export declare namespace Video {
     function createGetWaybackKeyRequest(threadId: number): Axios.AxiosRequestConfig;
 }
 export declare namespace Ranking {
-    function createGetRankingRSSRequest(period: string, type: string, suffix: string): {
+    function createGetRankingRSSRequest(type: string, period: string, suffix: string): {
         method: string;
         url: string;
         params: {
