@@ -77,7 +77,7 @@ export declare namespace Ranking {
     function createGetRankingRSSRequest(period: string, type: string, suffix: string): {
         method: string;
         url: string;
-        param: {
+        params: {
             rss: string;
             lang: string;
         };

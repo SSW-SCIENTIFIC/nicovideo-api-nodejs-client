@@ -218,7 +218,7 @@ export namespace Ranking {
         return {
             method: "GET",
             url: APIUrl.RANKING_RSS + period + "/" + type + "/" + suffix,
-            param: {
+            params: {
                 rss: "2.0",
                 lang: "ja-JP",
             },
