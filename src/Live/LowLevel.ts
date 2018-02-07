@@ -5,7 +5,7 @@ import * as cheerio from "cheerio";
 import { WatchData } from "../Common/WatchData";
 
 import { Session } from "../Session/Session";
-import { Video as VideoAPI } from "../APIEntryPoints";
+import { Live as LiveAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import {AxiosRequestConfig} from "axios";
 
@@ -22,13 +22,13 @@ export class Live {
     }
 
     /**
-     * Access watch API and get response body.
+     * Access live-watch API and get response body.
      * @param {string} videoId
      * @param {boolean} isHTML5 true if you want to access html5 version page. Default value is true.
      * @returns {Promise<string>}
      */
-    public async getWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
-        const options: AxiosRequestConfig = VideoAPI.createWatchRequest(videoId);
+    public async getLiveWatchPage(videoId: string, isHTML5: boolean = true): Promise<string> {
+        const options: AxiosRequestConfig =LiveAPI.createLiveWatchRequest(videoId);
 
         options.headers = options.headers || {};
         const cookies = ([options.headers.Cookie] || []);
