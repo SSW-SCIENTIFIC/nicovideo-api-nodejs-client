@@ -1,5 +1,5 @@
 import axios, * as Axios from "axios";
-import * as axiosCookieJarSupport from "@3846masa/axios-cookiejar-support";
+import axiosCookieJarSupport from "@3846masa/axios-cookiejar-support";
 import { CookieJar } from "tough-cookie";
 
 import { Session as SessionAPI } from "../APIEntryPoints";
