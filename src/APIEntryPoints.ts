@@ -213,6 +213,16 @@ export namespace Video {
     }
 }
 
+export namespace Live {
+    export function createLiveWatchRequest (liveId: string): Axios.AxiosRequestConfig {
+        return {
+            method: "GET",
+            url: APIUrl.LIVE_WATCH + liveId,
+            withCredentials: true,
+        };
+    }
+}
+
 export namespace Ranking {
     export function createGetRankingRSSRequest(type: string, period: string, suffix: string) {
         return {

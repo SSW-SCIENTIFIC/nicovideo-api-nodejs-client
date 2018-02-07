@@ -73,6 +73,9 @@ export declare namespace Video {
     function createGetThreadKeyRequest(threadId: number): Axios.AxiosRequestConfig;
     function createGetWaybackKeyRequest(threadId: number): Axios.AxiosRequestConfig;
 }
+export declare namespace Live {
+    function createLiveWatchRequest(liveId: string): Axios.AxiosRequestConfig;
+}
 export declare namespace Ranking {
     function createGetRankingRSSRequest(type: string, period: string, suffix: string): {
         method: string;
