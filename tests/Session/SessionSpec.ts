@@ -1,8 +1,8 @@
 import * as chai from "chai";
 import * as sinon from "sinon";
 
-import * as APIUrl from "../../src/APIUrls";
-import { Session } from "../../src/Session/Session";
+import * as APIUrl from "../../src/API/APIUrls";
+import { Session } from "../../src/API/Session/Session";
 
 describe("Session", () => {
     let server: sinon.SinonFakeServer;
