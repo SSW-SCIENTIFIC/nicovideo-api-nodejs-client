@@ -1,5 +1,4 @@
 import * as Axios from "axios";
-import { LoginResult } from "./LoginResult";
 /**
  * Class representing a session for NicoNico Video.
  */
@@ -18,10 +17,11 @@ export declare class Session {
      * Login to NicoNico Video.
      * @param {string} email
      * @param {string} password
+     * @param {(session: Session, url: string) => boolean} onMultiFactorAuthentication Callback for multi-factor-authentication
      * @returns {Promise<void>}
      */
-    login(email?: string, password?: string): Promise<LoginResult>;
-    loginMultiFactorAuthentication(url: string, oneTimePad: string, trust?: boolean, deviceName?: string): Promise<boolean>;
+    login(email?: string, password?: string, onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler): Promise<void>;
+    loginMultiFactorAuthentication(url: string, oneTimePad: string, trust?: boolean, deviceName?: string): Promise<void>;
     /**
      * Logout from NicoNico Video.
      * @returns {Promise<void>}
@@ -33,3 +33,7 @@ export declare class Session {
      */
     isActive(): Promise<boolean>;
 }
+export declare namespace Session {
+    type MultiFactorAuthenticationHandler = ((session: Session, url: string) => boolean) | ((session: Session, url: string) => Promise<boolean>);
+}
+export default Session;

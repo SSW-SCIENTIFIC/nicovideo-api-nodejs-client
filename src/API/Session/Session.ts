@@ -6,7 +6,6 @@ import { Session as SessionAPI } from "../APIEntryPoints";
 import * as APIUrl from "../APIUrls";
 import SessionException from "./SessionException";
 import { MyListResponse } from "../MyList/MyList";
-import { LoginResult, LoginResultStatus } from "./LoginResult";
 
 /**
  * Class representing a session for NicoNico Video.
@@ -24,15 +23,22 @@ export class Session {
         public readonly client: Axios.AxiosInstance = axiosCookieJarSupport(axios.create()),
     ) {
         this.client.defaults = { jar: new CookieJar() };
+        this.email = email || "";
+        this.password = password || "";
     }
 
     /**
      * Login to NicoNico Video.
      * @param {string} email
      * @param {string} password
+     * @param {(session: Session, url: string) => boolean} onMultiFactorAuthentication Callback for multi-factor-authentication
      * @returns {Promise<void>}
      */
-    public async login(email?: string, password?: string): Promise<LoginResult> {
+    public async login(
+        email?: string,
+        password?: string,
+        onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler,
+    ): Promise<void> {
         this.email = email || this.email;
         this.password = password || this.password;
 
@@ -42,21 +48,28 @@ export class Session {
         if (response.headers["x-niconico-authflag"] == 0) {
             // MFA is required
             if (response.config.url && response.config.url.indexOf(APIUrl.LOGIN_MFA) !== -1) {
-                return {
-                    status: LoginResultStatus.MULTI_FACTOR,
-                    url: response.config.url,
-                };
+                if (onMultiFactorAuthentication && await onMultiFactorAuthentication(this, response.config.url)) {
+                    return;
+                }
             }
 
-            return { status: LoginResultStatus.FAILURE };
+            throw new SessionException(
+                SessionException.ErrorMessage(SessionException.Code.LOGIN_FAILURE),
+                SessionException.Code.LOGIN_FAILURE,
+            );
         }
 
-        return { status: LoginResultStatus.SUCCESS };
+        return;
     }
 
-    public async loginMultiFactorAuthentication(url: string, oneTimePad: string, trust: boolean = false, deviceName?: string): Promise<boolean> {
+    public async loginMultiFactorAuthentication(url: string, oneTimePad: string, trust: boolean = false, deviceName?: string): Promise<void> {
         const response = await this.client.request(SessionAPI.createMultiFactorAuthenticationRequest(url, oneTimePad, trust, deviceName));
-        return response.headers["x-niconico-authflag"] != 0;
+        if (response.headers["x-niconico-authflag"] == 0) {
+            throw new SessionException(
+                SessionException.ErrorMessage(SessionException.Code.LOGIN_FAILURE),
+                SessionException.Code.LOGIN_FAILURE,
+            );
+        }
     }
 
     /**
@@ -76,3 +89,10 @@ export class Session {
         return result.status === "ok";
     }
 }
+
+export namespace Session {
+    export type MultiFactorAuthenticationHandler
+        = ((session: Session, url: string) => boolean) | ((session: Session, url: string) => Promise<boolean>);
+}
+
+export default Session;
