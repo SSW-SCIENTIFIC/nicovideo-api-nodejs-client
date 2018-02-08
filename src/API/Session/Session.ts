@@ -38,9 +38,28 @@ export class Session {
         email?: string,
         password?: string,
         onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler,
+    ): Promise<void>;
+
+    /**
+     * Login to NicoNico Video.
+     * @param {(session: Session, url: string) => boolean} onMultiFactorAuthentication Callback for multi-factor-authentication
+     * @returns {Promise<void>}
+     */
+    public async login(
+        onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler,
+    ): Promise<void>;
+
+    public async login(
+        param?: string | Session.MultiFactorAuthenticationHandler,
+        password?: string,
+        onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler,
     ): Promise<void> {
-        this.email = email || this.email;
-        this.password = password || this.password;
+        if (param instanceof Function) {
+            onMultiFactorAuthentication = param;
+        } else {
+            this.email = param || this.email;
+            this.password = password || this.password;
+        }
 
         const response = await this.client.request(SessionAPI.createLoginRequest(this.email, this.password));
 

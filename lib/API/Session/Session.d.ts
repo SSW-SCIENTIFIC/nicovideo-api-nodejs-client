@@ -21,6 +21,12 @@ export declare class Session {
      * @returns {Promise<void>}
      */
     login(email?: string, password?: string, onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler): Promise<void>;
+    /**
+     * Login to NicoNico Video.
+     * @param {(session: Session, url: string) => boolean} onMultiFactorAuthentication Callback for multi-factor-authentication
+     * @returns {Promise<void>}
+     */
+    login(onMultiFactorAuthentication?: Session.MultiFactorAuthenticationHandler): Promise<void>;
     loginMultiFactorAuthentication(url: string, oneTimePad: string, trust?: boolean, deviceName?: string): Promise<void>;
     /**
      * Logout from NicoNico Video.
