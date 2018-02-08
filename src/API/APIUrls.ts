@@ -1,5 +1,7 @@
 export const ORIGIN = "http://www.nicovideo.jp";
 export const LOGIN = "https://account.nicovideo.jp/api/v1/login";
+export const LOGIN_MFA = "https://account.nicovideo.jp/mfa";
+export const LOGIN_MFA_CALLBACK = "https://account.nicovideo.jp/login/mfa/callback";
 export const LOGOUT = "https://account.nicovideo.jp/logout";
 export const GET_THUMB_INFO = "http://ext.nicovideo.jp/api/getthumbinfo/";
 export const GET_FLV = "http://flapi.nicovideo.jp/api/getflv/";

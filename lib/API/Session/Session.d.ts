@@ -1,4 +1,5 @@
 import * as Axios from "axios";
+import { LoginResult } from "./LoginResult";
 /**
  * Class representing a session for NicoNico Video.
  */
@@ -19,7 +20,8 @@ export declare class Session {
      * @param {string} password
      * @returns {Promise<void>}
      */
-    login(email?: string, password?: string): Promise<void>;
+    login(email?: string, password?: string): Promise<LoginResult>;
+    loginMultiFactorAuthentication(url: string, oneTimePad: string, trust?: boolean, deviceName?: string): Promise<boolean>;
     /**
      * Logout from NicoNico Video.
      * @returns {Promise<void>}
