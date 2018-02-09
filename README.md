@@ -10,4 +10,4 @@ License
 -------
 This software is released under MIT License (see [LICENSE][] file).
 
-[LICENSE]:https://github.com/SSW-SCIENTIFIC/nicovideo-api-nodejs-client/blob/master/README.md
+[LICENSE]:https://github.com/SSW-SCIENTIFIC/nicovideo-api-nodejs-client/blob/master/LICENSE
