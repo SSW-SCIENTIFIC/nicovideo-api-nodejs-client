@@ -8,7 +8,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "tsc": "tsc -p src/",
+    "tsc": "tsc",
     "test": "mocha -r ts-node/register -R spec tests/**/*Spec.ts"
   },
   "author": "SSW-SCIENTIFIC",

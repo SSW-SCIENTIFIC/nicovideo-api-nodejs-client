@@ -81,6 +81,14 @@ export class Session {
         return;
     }
 
+    /**
+     * Traits Multi Factor Authentication.
+     * @param {string} url
+     * @param {string} oneTimePad
+     * @param {boolean} trust
+     * @param {string} deviceName
+     * @returns {Promise<void>}
+     */
     public async loginMultiFactorAuthentication(url: string, oneTimePad: string, trust: boolean = false, deviceName?: string): Promise<void> {
         const response = await this.client.request(SessionAPI.createMultiFactorAuthenticationRequest(url, oneTimePad, trust, deviceName));
         if (response.headers["x-niconico-authflag"] == 0) {
